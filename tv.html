@@ -11,7 +11,7 @@
     <link href="logo-puskesmas.png" rel="icon">
     <style>
         /* ============================================================
-           GAYA TAMPILAN TV (dengan pemisahan AON/AOFF + durasi tunggu)
+           GAYA TAMPILAN TV (tanpa daftar menunggu di panel)
            ============================================================ */
         * {
             margin: 0;
@@ -21,7 +21,6 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            /* === LATAR BELAKANG SEGAR & CERAH === */
             background:
                 radial-gradient(ellipse at 15% 25%, rgba(56, 189, 248, 0.20) 0%, transparent 55%),
                 radial-gradient(ellipse at 85% 75%, rgba(52, 211, 153, 0.18) 0%, transparent 55%),
@@ -36,7 +35,6 @@
             position: relative;
         }
 
-        /* Elemen dekoratif latar belakang (lingkaran kabur) */
         body::before {
             content: '';
             position: fixed;
@@ -64,17 +62,11 @@
             animation: floatGlow 25s ease-in-out infinite alternate-reverse;
         }
         @keyframes floatGlow {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                transform: translate(40px, 30px) scale(1.2);
-            }
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 30px) scale(1.2); }
         }
 
-        /* ============================================================
-           HEADER - GRADASI GELAP SELARAS KLASTER
-           ============================================================ */
+        /* HEADER */
         .tv-header {
             width: 100%;
             max-width: 1600px;
@@ -112,7 +104,7 @@
             mask-composite: exclude;
             pointer-events: none;
         }
-        
+
         .header-left {
             display: flex;
             align-items: center;
@@ -189,14 +181,15 @@
             color: #fbbf24;
         }
 
+        /* KONTEN TV – 3 PANEL tanpa waiting section */
         .tv-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
             max-width: 1600px;
             width: 100%;
-            height: calc(92vh - 100px);
-            min-height: 500px;
+            height: auto;
+            min-height: 400px;
             position: relative;
             z-index: 1;
             flex: 1;
@@ -209,6 +202,7 @@
             border-radius: 40px;
             display: flex;
             flex-direction: column;
+            align-items: center;
             color: white;
             padding: 28px 20px 24px;
             border: 1px solid rgba(255, 255, 255, 0.10);
@@ -218,7 +212,6 @@
             overflow: hidden;
             height: 100%;
         }
-
         .tv-card::before {
             content: '';
             position: absolute;
@@ -230,7 +223,6 @@
             pointer-events: none;
         }
 
-        /* === GRADASI GELAP UNTUK MASING-MASING KLASTER === */
         .tv-card.k2 {
             background: linear-gradient(145deg, rgba(4, 12, 30, 0.96), rgba(16, 40, 70, 0.94));
             border-bottom: 6px solid #38bdf8;
@@ -276,6 +268,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
 
         .tv-card h2 {
@@ -406,187 +399,16 @@
             margin-right: auto;
         }
 
-        /* ---------- WAITING SECTION (dengan sub-bagian AON/AOFF) ---------- */
-        .waiting-section {
-            flex: 1;
-            overflow-y: auto;
-            min-height: 0;
-            padding-right: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .waiting-section::-webkit-scrollbar {
-            width: 4px;
-        }
-        .waiting-section::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-        }
-
-        .waiting-sub {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .waiting-sub-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #94a3b8;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-            padding: 2px 6px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            flex-shrink: 0;
-        }
-        .waiting-sub-header .sub-count {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 0 10px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            color: #e2e8f0;
-        }
-        .waiting-sub-header .sub-label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .waiting-sub-header .sub-label .badge-jenis-sub {
-            display: inline-block;
-            padding: 0 8px;
-            border-radius: 30px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            border: 1px solid transparent;
-            background: #e2e8f0;
-            color: #334155;
-        }
-        .badge-jenis-sub.aon {
-            background: rgba(56, 189, 248, 0.20);
-            color: #7dd3fc;
-            border-color: rgba(56, 189, 248, 0.4);
-        }
-        .badge-jenis-sub.aoff {
-            background: rgba(251, 191, 36, 0.20);
-            color: #fcd34d;
-            border-color: rgba(251, 191, 36, 0.4);
-        }
-
-        .waiting-list {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        /* ===== PERUBAHAN UTAMA: ukuran font pada area antrian menunggu dinaikkan ===== */
-        .waiting-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 6px 12px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            font-size: 1.2rem;  /* sama dengan .dokter-tv */
-            transition: background 0.2s;
-            flex-shrink: 0;
-            flex-wrap: wrap;
-        }
-        .waiting-item:hover {
-            background: rgba(255, 255, 255, 0.10);
-        }
-
-        .waiting-item .nomor-waiting {
-            font-weight: 700;
-            color: #e2e8f0;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 0 10px;
-            border-radius: 30px;
-            font-size: 1.1rem;  /* dinaikkan agar proporsional */
-            flex-shrink: 0;
-        }
-        .waiting-item .nama-waiting {
-            color: #f1f5f9;
-            font-weight: 500;
-            font-size: 1.2rem;  /* sama dengan .dokter-tv */
-            white-space: normal;
-            overflow: visible;
-            text-overflow: unset;
-            word-break: break-word;
-            flex: 1 1 auto;
-            min-width: 70px;
-        }
-        .waiting-item .posisi-waiting {
-            margin-left: auto;
-            font-size: 0.9rem;  /* tetap sedikit lebih kecil */
-            color: #94a3b8;
-            font-weight: 600;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0 10px;
-            border-radius: 30px;
-            flex-shrink: 0;
-        }
-        .durasi-tv {
-            font-size: 0.8rem;  /* dinaikkan sedikit */
-            font-weight: 600;
-            color: #a5b4fc;
-            background: rgba(99, 102, 241, 0.20);
-            padding: 2px 10px;
-            border-radius: 30px;
-            white-space: nowrap;
-            border: 1px solid rgba(99, 102, 241, 0.15);
-        }
-
-        .empty-waiting-sub {
-            color: #94a3b8;
-            text-align: center;
-            padding: 6px 0;
-            font-style: italic;
-            font-size: 0.85rem;
-        }
-
-        /* Total badge di header tetap ada untuk total keseluruhan */
-        .waiting-main-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-            color: #94a3b8;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            flex-shrink: 0;
-        }
-        .waiting-main-header .count-badge {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 2px 14px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            color: #e2e8f0;
-        }
-
         .tv-card.berkedip {
             animation: neonPulse 0.6s ease-in-out 3;
         }
         @keyframes neonPulse {
-            0% {
-                box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-            }
-            50% {
-                box-shadow: 0 0 60px rgba(255, 215, 0, 0.30), 0 0 120px rgba(255, 215, 0, 0.08);
-                border-color: rgba(255, 215, 0, 0.4);
-            }
-            100% {
-                box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-            }
+            0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.05); }
+            50% { box-shadow: 0 0 60px rgba(255, 215, 0, 0.30), 0 0 120px rgba(255, 215, 0, 0.08); border-color: rgba(255, 215, 0, 0.4); }
+            100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.05); }
         }
 
+        /* OVERLAY SUARA */
         #overlay-suara {
             position: fixed;
             top: 0;
@@ -671,6 +493,152 @@
         }
 
         /* ============================================================
+           TABEL DATA ANTRIAN MENUNGGU (matriks di bawah)
+           ============================================================ */
+        .table-container {
+            width: 100%;
+            max-width: 1600px;
+            margin-top: 24px;
+            background: linear-gradient(145deg, rgba(4, 12, 30, 0.92), rgba(8, 20, 45, 0.88));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 24px 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 1;
+        }
+        .table-container h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .table-container h2 i {
+            margin-right: 12px;
+            -webkit-text-fill-color: #38bdf8;
+            color: #38bdf8;
+        }
+        .table-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .table-sub {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 16px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+        }
+        .table-sub:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        .table-sub h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .table-sub h3 .badge-jenis {
+            font-size: 0.8rem;
+            background: rgba(56, 189, 248, 0.2);
+            padding: 2px 12px;
+            border-radius: 30px;
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        .table-sub h3 .badge-jenis.aoff {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fcd34d;
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+        .table-wrap {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.2rem;
+            color: #e2e8f0;
+        }
+        .table-sub:first-child th {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(56, 189, 248, 0.08));
+            border-bottom: 2px solid rgba(56, 189, 248, 0.4);
+            color: #7dd3fc;
+            font-size: 1.1rem;
+        }
+        .table-sub:last-child th {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.25), rgba(251, 191, 36, 0.08));
+            border-bottom: 2px solid rgba(251, 191, 36, 0.4);
+            color: #fcd34d;
+            font-size: 1.1rem;
+        }
+        th {
+            text-align: left;
+            padding: 12px 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            padding: 12px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .table-sub:first-child tr:hover td {
+            background: rgba(56, 189, 248, 0.08);
+        }
+        .table-sub:last-child tr:hover td {
+            background: rgba(251, 191, 36, 0.08);
+        }
+        .empty-table {
+            color: #64748b;
+            text-align: center;
+            padding: 20px 0;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 992px) {
+            .table-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .table-container {
+                padding: 16px;
+            }
+            .table-container h2 {
+                font-size: 1.6rem;
+            }
+            table {
+                font-size: 1.0rem;
+            }
+            th, td {
+                padding: 10px 8px;
+            }
+        }
+        @media (max-width: 480px) {
+            table {
+                font-size: 0.9rem;
+            }
+            th, td {
+                padding: 8px 6px;
+            }
+        }
+
+        /* ============================================================
            RESPONSIVE
            ============================================================ */
         @media (max-width: 1200px) {
@@ -680,26 +648,10 @@
                 gap: 20px;
             }
             .tv-card {
-                min-height: 380px;
+                min-height: 280px;
             }
             .tv-card .nama {
                 font-size: 1.8rem;
-            }
-            .waiting-item {
-                font-size: 1.1rem;
-                padding: 6px 10px;
-            }
-            .waiting-item .nama-waiting {
-                font-size: 1.1rem;
-            }
-            .waiting-item .nomor-waiting {
-                font-size: 1.0rem;
-            }
-            .waiting-item .posisi-waiting {
-                font-size: 0.85rem;
-            }
-            .durasi-tv {
-                font-size: 0.75rem;
             }
             .panel-logo img {
                 width: 80px;
@@ -742,7 +694,7 @@
                 gap: 20px;
             }
             .tv-card {
-                min-height: 320px;
+                min-height: 260px;
                 padding: 20px 16px;
             }
             .tv-card .nomor {
@@ -766,32 +718,6 @@
             .tv-card .status-text {
                 font-size: 0.8rem;
                 margin-top: 10px;
-            }
-            .waiting-item {
-                font-size: 1.0rem;
-                padding: 5px 8px;
-                gap: 6px;
-            }
-            .waiting-item .nama-waiting {
-                font-size: 1.0rem;
-                min-width: 50px;
-            }
-            .waiting-item .nomor-waiting {
-                font-size: 0.9rem;
-                padding: 0 6px;
-            }
-            .waiting-item .posisi-waiting {
-                font-size: 0.8rem;
-                padding: 0 6px;
-            }
-            .durasi-tv {
-                font-size: 0.7rem;
-            }
-            .waiting-sub-header {
-                font-size: 0.7rem;
-            }
-            .waiting-sub-header .sub-count {
-                font-size: 0.65rem;
             }
             #overlay-suara h1 {
                 font-size: 2.8rem;
@@ -870,32 +796,6 @@
                 font-size: 0.7rem;
                 margin-top: 8px;
             }
-            .waiting-item {
-                font-size: 0.9rem;
-                padding: 4px 6px;
-                gap: 4px;
-            }
-            .waiting-item .nama-waiting {
-                font-size: 0.9rem;
-                min-width: 40px;
-            }
-            .waiting-item .nomor-waiting {
-                font-size: 0.8rem;
-                padding: 0 4px;
-            }
-            .waiting-item .posisi-waiting {
-                font-size: 0.7rem;
-                padding: 0 4px;
-            }
-            .durasi-tv {
-                font-size: 0.6rem;
-            }
-            .waiting-sub-header {
-                font-size: 0.6rem;
-            }
-            .waiting-sub-header .sub-count {
-                font-size: 0.6rem;
-            }
             .panel-logo img {
                 width: 56px;
                 height: 56px;
@@ -941,14 +841,14 @@
 
     <div id="indikator-antrean"><i class="fas fa-volume-up" style="margin-right: 8px;"></i> Antrean suara: <span id="jumlah-antrean">0</span></div>
 
-    <!-- HEADER DENGAN GRADASI GELAP SELARAS KLASTER -->
+    <!-- HEADER -->
     <header class="tv-header">
         <div class="header-left">
             <div class="logo-wrapper">
                 <img src="logo-puskesmas.png" alt="Logo Puskesmas" />
                 <div class="brand-text">
                     <span class="nama-puskesmas">UPTD PUSKESMAS WAJO</span>
-                    <span class="nama-sistem">SIAP - Sistem Informasi Antrian Pasien</span>
+                    <span class="nama-sistem"><i class="fas fa-hospital-user"></i> SIAP - Sistem Informasi Antrian Pasien</span>
                 </div>
             </div>
         </div>
@@ -958,118 +858,83 @@
         </div>
     </header>
 
-    <!-- KONTEN TV (3 PANEL) -->
+    <!-- KONTEN TV (3 PANEL) – tanpa bagian antrian menunggu -->
     <div class="tv-container" id="tvContainer">
         <!-- Panel K3L (Usia Lanjut) -->
         <div class="tv-card k3l" id="tvK3L">
+            <div class="panel-logo">
+            </div>
             <div class="called-section">
                 <h2> Klaster 3</h2>
-                <div class="klaster-sub">Usia Lanjut</div>
+                <div class="klaster-sub">USIA LANJUT</div>
                 <div class="dokter-tv" id="dokterK3L"><i class="fas fa-user-md"></i> <span id="dokterNamaK3L">Memuat...</span></div>
                 <div class="nomor" id="nomorK3L">-</div>
                 <div class="nama" id="namaK3L">Menunggu</div>
                 <div class="status-text" id="statusK3L">Belum ada panggilan</div>
             </div>
-            <div class="waiting-section" id="waitingK3L">
-                <div class="waiting-main-header">
-                    <span><i class="fas fa-clock"></i> Antrian Menunggu</span>
-                    <span class="count-badge" id="countK3L">0</span>
-                </div>
-                <!-- Sub: AON -->
-                <div class="waiting-sub" id="waitingSubK3LAON">
-                    <div class="waiting-sub-header">
-                        <span class="sub-label"><i class="fas fa-globe" style="color:#38bdf8;"></i> Antrian Online <span class="badge-jenis-sub aon">AON</span></span>
-                        <span class="sub-count" id="countSubK3LAON">0</span>
-                    </div>
-                    <div class="waiting-list" id="listK3LAON">
-                        <div class="empty-waiting-sub">Tidak ada antrian online</div>
-                    </div>
-                </div>
-                <!-- Sub: AOFF -->
-                <div class="waiting-sub" id="waitingSubK3LAOFF">
-                    <div class="waiting-sub-header">
-                        <span class="sub-label"><i class="fas fa-hospital-user" style="color:#fbbf24;"></i> Antrian Offline <span class="badge-jenis-sub aoff">AOFF</span></span>
-                        <span class="sub-count" id="countSubK3LAOFF">0</span>
-                    </div>
-                    <div class="waiting-list" id="listK3LAOFF">
-                        <div class="empty-waiting-sub">Tidak ada antrian offline</div>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <!-- Panel K2 -->
+        <!-- Panel K2 (Anak & Remaja) -->
         <div class="tv-card k2" id="tvK2">
+            <div class="panel-logo">
+            </div>
             <div class="called-section">
                 <h2> Klaster 2</h2>
-                <div class="klaster-sub">Anak & Remaja</div>
+                <div class="klaster-sub">ANAK & REMAJA</div>
                 <div class="dokter-tv" id="dokterK2"><i class="fas fa-user-md"></i> <span id="dokterNamaK2">Memuat...</span></div>
                 <div class="nomor" id="nomorK2">-</div>
                 <div class="nama" id="namaK2">Menunggu</div>
                 <div class="status-text" id="statusK2">Belum ada panggilan</div>
             </div>
-            <div class="waiting-section" id="waitingK2">
-                <div class="waiting-main-header">
-                    <span><i class="fas fa-clock"></i> Antrian Menunggu</span>
-                    <span class="count-badge" id="countK2">0</span>
-                </div>
-                <!-- Sub: AON -->
-                <div class="waiting-sub" id="waitingSubK2AON">
-                    <div class="waiting-sub-header">
-                        <span class="sub-label"><i class="fas fa-globe" style="color:#38bdf8;"></i> Antrian Online <span class="badge-jenis-sub aon">AON</span></span>
-                        <span class="sub-count" id="countSubK2AON">0</span>
-                    </div>
-                    <div class="waiting-list" id="listK2AON">
-                        <div class="empty-waiting-sub">Tidak ada antrian online</div>
-                    </div>
-                </div>
-                <!-- Sub: AOFF -->
-                <div class="waiting-sub" id="waitingSubK2AOFF">
-                    <div class="waiting-sub-header">
-                        <span class="sub-label"><i class="fas fa-hospital-user" style="color:#fbbf24;"></i> Antrian Offline <span class="badge-jenis-sub aoff">AOFF</span></span>
-                        <span class="sub-count" id="countSubK2AOFF">0</span>
-                    </div>
-                    <div class="waiting-list" id="listK2AOFF">
-                        <div class="empty-waiting-sub">Tidak ada antrian offline</div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Panel K3D (Usia Dewasa) -->
         <div class="tv-card k3d" id="tvK3D">
+            <div class="panel-logo">
+            </div>
             <div class="called-section">
                 <h2> Klaster 3</h2>
-                <div class="klaster-sub">Usia Dewasa</div>
+                <div class="klaster-sub">USIA DEWASA</div>
                 <div class="dokter-tv" id="dokterK3D"><i class="fas fa-user-md"></i> <span id="dokterNamaK3D">Memuat...</span></div>
                 <div class="nomor" id="nomorK3D">-</div>
                 <div class="nama" id="namaK3D">Menunggu</div>
                 <div class="status-text" id="statusK3D">Belum ada panggilan</div>
             </div>
-            <div class="waiting-section" id="waitingK3D">
-                <div class="waiting-main-header">
-                    <span><i class="fas fa-clock"></i> Antrian Menunggu</span>
-                    <span class="count-badge" id="countK3D">0</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         CONTAINER TABEL DATA ANTRIAN MENUNGGU (matriks)
+         ============================================================ -->
+    <div class="table-container" id="tableWaitingContainer">
+        <h2><i class="fas fa-list-ul"></i>ANTRIAN MENUNGGU</h2>
+        <div class="table-grid">
+            <!-- Tabel Online -->
+            <div class="table-sub">
+                <h3><i class="fas fa-globe" style="color:#38bdf8;"></i> ANTRIAN ONLINE <span class="badge-jenis">AON</span></h3>
+                <div class="table-wrap">
+                    <table id="tableAON">
+                        <thead>
+                            <tr><th>NOMOR</th><th>NAMA</th><th>KLASTER TUJUAN</th></tr>
+                        </thead>
+                        <tbody id="tbodyAON">
+                            <tr><td colspan="3" class="empty-table">Tidak ada antrian online</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <!-- Sub: AON -->
-                <div class="waiting-sub" id="waitingSubK3DAON">
-                    <div class="waiting-sub-header">
-                        <span class="sub-label"><i class="fas fa-globe" style="color:#38bdf8;"></i> Antrian Online <span class="badge-jenis-sub aon">AON</span></span>
-                        <span class="sub-count" id="countSubK3DAON">0</span>
-                    </div>
-                    <div class="waiting-list" id="listK3DAON">
-                        <div class="empty-waiting-sub">Tidak ada antrian online</div>
-                    </div>
-                </div>
-                <!-- Sub: AOFF -->
-                <div class="waiting-sub" id="waitingSubK3DAOFF">
-                    <div class="waiting-sub-header">
-                        <span class="sub-label"><i class="fas fa-hospital-user" style="color:#fbbf24;"></i> Antrian Offline <span class="badge-jenis-sub aoff">AOFF</span></span>
-                        <span class="sub-count" id="countSubK3DAOFF">0</span>
-                    </div>
-                    <div class="waiting-list" id="listK3DAOFF">
-                        <div class="empty-waiting-sub">Tidak ada antrian offline</div>
-                    </div>
+            </div>
+            <!-- Tabel Offline -->
+            <div class="table-sub">
+                <h3><i class="fas fa-hospital-user" style="color:#fbbf24;"></i> ANTRIAN OFFLINE <span class="badge-jenis aoff">AOFF</span></h3>
+                <div class="table-wrap">
+                    <table id="tableAOFF">
+                        <thead>
+                            <tr><th>NOMOR</th><th>NAMA</th><th>KLASTER TUJUAN</th></tr>
+                        </thead>
+                        <tbody id="tbodyAOFF">
+                            <tr><td colspan="3" class="empty-table">Tidak ada antrian offline</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -1078,7 +943,7 @@
     <script src="script.js"></script>
     <script>
         // ============================================================
-        // 1. FUNGSI KONVERSI ANGKA KE KATA (BAHASA INDONESIA)
+        // 1. FUNGSI KONVERSI ANGKA KE KATA
         // ============================================================
         function angkaKeKata(angka) {
             if (typeof angka !== 'number' || isNaN(angka)) return '';
@@ -1111,7 +976,7 @@
         }
 
         // ============================================================
-        // 2. FUNGSI FORMAT DURASI (SAMA SEPERTI DI INDEX.HTML)
+        // 2. FUNGSI FORMAT DURASI (untuk tabel tidak dipakai, tapi tetap ada)
         // ============================================================
         function formatDurasi(ms) {
             if (!ms || ms < 0) return '—';
@@ -1128,7 +993,7 @@
         }
 
         // ============================================================
-        // 3. KONFIGURASI SUARA (Voice AI)
+        // 3. KONFIGURASI SUARA
         // ============================================================
         const synth = window.speechSynthesis;
         let suaraTerpilih = null;
@@ -1284,10 +1149,10 @@
         }
 
         // ============================================================
-        // 4. LOGIKA TV + INTEGRASI DOKTER + DURASI TUNGGU REAL-TIME
+        // 4. LOGIKA TV – HANYA MENAMPILKAN PANGGILAN AKTIF
         // ============================================================
         let cachePanggilan = { K2: null, K3D: null, K3L: null };
-        let snapshotTerakhir = null; // untuk update durasi tanpa reload
+        let snapshotTerakhir = null;
 
         function updateDokterTV(data) {
             ['K2', 'K3D', 'K3L'].forEach(k => {
@@ -1302,9 +1167,9 @@
             snapshotTerakhir = snapshot;
             const klasterList = ['K2', 'K3D', 'K3L'];
             let dataKlaster = {
-                K2: { called: null, waitingAON: [], waitingAOFF: [] },
-                K3D: { called: null, waitingAON: [], waitingAOFF: [] },
-                K3L: { called: null, waitingAON: [], waitingAOFF: [] }
+                K2: { called: null },
+                K3D: { called: null },
+                K3L: { called: null }
             };
 
             snapshot.forEach((childSnapshot) => {
@@ -1317,46 +1182,17 @@
                     if (!dataKlaster[k].called || waktu > (dataKlaster[k].called.waktu_panggil || 0)) {
                         dataKlaster[k].called = data;
                     }
-                } else if (data.status === 'waiting') {
-                    const jenis = data.jenis_antrian || 'AON';
-                    const entry = {
-                        nomor: data.nomor_antrian,
-                        nama: data.nama_pasien,
-                        waktu_daftar: data.waktu_daftar || 0,
-                        waktu_checkin: data.waktu_checkin || 0
-                    };
-                    if (jenis === 'AOFF') {
-                        dataKlaster[k].waitingAOFF.push(entry);
-                    } else {
-                        dataKlaster[k].waitingAON.push(entry);
-                    }
                 }
             });
-
-            klasterList.forEach(k => {
-                dataKlaster[k].waitingAON.sort((a, b) => a.waktu_daftar - b.waktu_daftar);
-                dataKlaster[k].waitingAOFF.sort((a, b) => a.waktu_daftar - b.waktu_daftar);
-            });
-
-            const now = Date.now();
 
             klasterList.forEach(k => {
                 const elNomor = document.getElementById(`nomor${k}`);
                 const elNama = document.getElementById(`nama${k}`);
                 const elStatus = document.getElementById(`status${k}`);
                 const elCard = document.getElementById(`tv${k}`);
-                const elCount = document.getElementById(`count${k}`);
-
-                const listAON = document.getElementById(`list${k}AON`);
-                const listAOFF = document.getElementById(`list${k}AOFF`);
-                const countAON = document.getElementById(`countSub${k}AON`);
-                const countAOFF = document.getElementById(`countSub${k}AOFF`);
 
                 const called = dataKlaster[k].called;
-                const waitingAON = dataKlaster[k].waitingAON;
-                const waitingAOFF = dataKlaster[k].waitingAOFF;
 
-                // Update bagian dipanggil
                 if (called) {
                     const nomor = called.nomor_antrian;
                     const nama = called.nama_pasien;
@@ -1383,87 +1219,67 @@
                     elStatus.textContent = 'Belum ada panggilan';
                     cachePanggilan[k] = null;
                 }
-
-                // Render waiting AON dengan durasi
-                if (waitingAON.length === 0) {
-                    listAON.innerHTML = `<div class="empty-waiting-sub">Tidak ada antrian online</div>`;
-                    countAON.textContent = '0';
-                } else {
-                    const maxShow = 5;
-                    const showItems = waitingAON.slice(0, maxShow);
-                    let html = '';
-                    showItems.forEach((item, index) => {
-                        const posisi = index + 1;
-                        const startTime = item.waktu_checkin || item.waktu_daftar || 0;
-                        const durasiMs = startTime ? now - startTime : 0;
-                        const durasiStr = formatDurasi(durasiMs);
-                        html += `
-                                    <div class="waiting-item">
-                                        <span class="nomor-waiting">${item.nomor}</span>
-                                        <span class="nama-waiting">${item.nama}</span>
-                                        <span class="durasi-tv">⏱ ${durasiStr}</span>
-                                        <span class="posisi-waiting">#${posisi}</span>
-                                    </div>
-                                `;
-                    });
-                    if (waitingAON.length > maxShow) {
-                        html += `<div class="waiting-item" style="justify-content:center; color:#94a3b8; font-size:0.85rem; border-style:dashed;">
-                                    + ${waitingAON.length - maxShow} antrian lainnya
-                                </div>`;
-                    }
-                    listAON.innerHTML = html;
-                    countAON.textContent = waitingAON.length;
-                }
-
-                // Render waiting AOFF dengan durasi
-                if (waitingAOFF.length === 0) {
-                    listAOFF.innerHTML = `<div class="empty-waiting-sub">Tidak ada antrian offline</div>`;
-                    countAOFF.textContent = '0';
-                } else {
-                    const maxShow = 5;
-                    const showItems = waitingAOFF.slice(0, maxShow);
-                    let html = '';
-                    showItems.forEach((item, index) => {
-                        const posisi = index + 1;
-                        const startTime = item.waktu_checkin || item.waktu_daftar || 0;
-                        const durasiMs = startTime ? now - startTime : 0;
-                        const durasiStr = formatDurasi(durasiMs);
-                        html += `
-                                    <div class="waiting-item">
-                                        <span class="nomor-waiting">${item.nomor}</span>
-                                        <span class="nama-waiting">${item.nama}</span>
-                                        <span class="durasi-tv">⏱ ${durasiStr}</span>
-                                        <span class="posisi-waiting">#${posisi}</span>
-                                    </div>
-                                `;
-                    });
-                    if (waitingAOFF.length > maxShow) {
-                        html += `<div class="waiting-item" style="justify-content:center; color:#94a3b8; font-size:0.85rem; border-style:dashed;">
-                                    + ${waitingAOFF.length - maxShow} antrian lainnya
-                                </div>`;
-                    }
-                    listAOFF.innerHTML = html;
-                    countAOFF.textContent = waitingAOFF.length;
-                }
-
-                // Total count
-                const totalWaiting = waitingAON.length + waitingAOFF.length;
-                elCount.textContent = totalWaiting;
             });
         }
 
-        // Fungsi untuk update durasi tanpa reload data (setiap 5 detik)
-        function updateDurasi() {
-            if (snapshotTerakhir) {
-                renderTV(snapshotTerakhir);
+        // ============================================================
+        // 5. RENDER TABEL ANTRIAN MENUNGGU (matriks)
+        // ============================================================
+        function renderTable(snapshot) {
+            const mapKlaster = {
+                'K2': 'Anak & Remaja',
+                'K3D': 'Usia Dewasa',
+                'K3L': 'Usia Lanjut'
+            };
+
+            const dataAON = [];
+            const dataAOFF = [];
+
+            snapshot.forEach((childSnapshot) => {
+                const data = childSnapshot.val();
+                if (data.status === 'waiting') {
+                    const entry = {
+                        nomor: data.nomor_antrian || '-',
+                        nama: data.nama_pasien || '-',
+                        klaster: data.klaster || '-'
+                    };
+                    if (data.jenis_antrian === 'AOFF') {
+                        dataAOFF.push(entry);
+                    } else {
+                        dataAON.push(entry);
+                    }
+                }
+            });
+
+            function renderTabel(tbodyId, data) {
+                const tbody = document.getElementById(tbodyId);
+                if (!tbody) return;
+                if (data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="3" class="empty-table">Tidak ada antrian</td></tr>`;
+                    return;
+                }
+                let html = '';
+                data.forEach(item => {
+                    const klasterNama = mapKlaster[item.klaster] || item.klaster;
+                    html += `<tr>
+                                <td>${item.nomor}</td>
+                                <td>${item.nama}</td>
+                                <td>${klasterNama}</td>
+                            </tr>`;
+                });
+                tbody.innerHTML = html;
             }
+
+            renderTabel('tbodyAON', dataAON);
+            renderTabel('tbodyAOFF', dataAOFF);
         }
 
         // ============================================================
-        // 5. LISTENER FIREBASE
+        // 6. LISTENER FIREBASE
         // ============================================================
         database.ref('antrians').on('value', (snapshot) => {
             renderTV(snapshot);
+            renderTable(snapshot);
         });
 
         database.ref('dokter_assignments').on('value', (snapshot) => {
@@ -1472,18 +1288,24 @@
         });
 
         // ============================================================
-        // 6. INISIALISASI & INTERVAL DURASI
+        // 7. INISIALISASI & INTERVAL DURASI (hanya untuk TV)
         // ============================================================
         database.ref('dokter_assignments').once('value', (snapshot) => {
             const data = snapshot.val() || {};
             updateDokterTV(data);
         });
 
-        // Update durasi setiap 5 detik
-        setInterval(updateDurasi, 5000);
+        // Update tampilan TV setiap 5 detik (tanpa mengubah tabel karena sudah realtime)
+        setInterval(() => {
+            if (snapshotTerakhir) {
+                renderTV(snapshotTerakhir);
+                // Tabel tidak perlu diupdate karena data sudah realtime, tapi amankan
+                renderTable(snapshotTerakhir);
+            }
+        }, 5000);
 
         // ============================================================
-        // 7. JAM & TANGGAL REALTIME
+        // 8. JAM & TANGGAL REALTIME
         // ============================================================
         function updateJamTanggal() {
             const now = new Date();
@@ -1497,7 +1319,7 @@
         updateJamTanggal();
         setInterval(updateJamTanggal, 1000);
 
-        console.log('📺 TV dengan ukuran font antrian menunggu disamakan dengan nama dokter, siap!');
+        console.log('📺 TV tanpa antrian menunggu di panel – hanya tabel matriks.');
     </script>
 </body>
 </html>
