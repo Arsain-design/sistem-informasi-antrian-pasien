@@ -1,0 +1,305 @@
+/* ============================================
+   IMPOR FONT PREMIUM (Inter)
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    background: #eef2ff;
+    /* Gradien latar belakang yang lembut dan modern */
+    background-image: radial-gradient(ellipse at 10% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
+                      radial-gradient(ellipse at 90% 80%, rgba(236, 72, 153, 0.10) 0%, transparent 50%),
+                      linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* ============================================
+   KONTAINER UTAMA (Efek Kaca / Glassmorphism)
+   ============================================ */
+.container {
+    max-width: 880px;
+    width: 100%;
+    padding: 40px 45px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-radius: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+/* ============================================
+   TYPOGRAPHY & HEADER
+   ============================================ */
+h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+}
+
+.container > p {
+    color: #64748b;
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+    letter-spacing: 0.3px;
+    border-left: 4px solid #818cf8;
+    padding-left: 16px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 0 12px 12px 0;
+}
+
+/* ============================================
+   FORM GROUP & INPUT MODERN
+   ============================================ */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2px solid rgba(226, 232, 240, 0.8);
+    border-radius: 18px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    color: #0f172a;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #818cf8;
+    background: #ffffff;
+    box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.15), 0 4px 12px rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+}
+
+input::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+/* ============================================
+   BUTTONS PREMIUM (Gradient & Shadow)
+   ============================================ */
+button {
+    width: 100%;
+    padding: 16px 28px;
+    border: none;
+    border-radius: 18px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+    box-shadow: 0 8px 20px -6px rgba(79, 70, 229, 0.4);
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efek kilauan saat hover */
+button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+}
+button:hover::after {
+    left: 100%;
+}
+
+button:hover {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 16px 30px -8px rgba(79, 70, 229, 0.5);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+button:disabled {
+    opacity: 0.6;
+    transform: scale(1);
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   NOTIFIKASI
+   ============================================ */
+.notifikasi {
+    margin-top: 24px;
+    padding: 16px 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.5);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #1e293b;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+}
+
+/* ============================================
+   DASHBOARD CARD (Daftar Antrian)
+   ============================================ */
+.daftar-antrian {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card-antrian {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    padding: 18px 24px;
+    border-radius: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Garis aksen warna di kiri card (sesuai klaster) */
+.card-antrian::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    border-radius: 0 4px 4px 0;
+    background: #6366f1; /* Default indigo */
+}
+
+.card-antrian:hover {
+    transform: translateX(6px);
+    box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.15);
+    border-color: #c7d2fe;
+}
+
+.card-antrian div strong {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1e1b4b;
+    background: rgba(99, 102, 241, 0.1);
+    padding: 4px 14px;
+    border-radius: 40px;
+    letter-spacing: -0.3px;
+    margin-right: 8px;
+}
+
+.card-antrian div {
+    font-weight: 500;
+    color: #334155;
+}
+
+/* Tombol Panggil di Dashboard */
+.btn-panggil {
+    width: auto;
+    padding: 12px 28px;
+    border-radius: 60px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    box-shadow: 0 6px 16px -4px rgba(16, 185, 129, 0.4);
+    letter-spacing: 0.5px;
+}
+
+.btn-panggil:hover {
+    transform: scale(1.06) translateY(-2px);
+    box-shadow: 0 12px 24px -6px rgba(16, 185, 129, 0.5);
+}
+
+/* ============================================
+   BADGE / HEADER DASHBOARD SPESIFIK KLASTER
+   ============================================ */
+.header-dashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.badge-klaster {
+    padding: 8px 22px;
+    border-radius: 60px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    background: linear-gradient(135deg, #1e1b4b, #4338ca);
+    color: white;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 640px) {
+    .container {
+        padding: 24px 20px;
+        border-radius: 32px;
+        backdrop-filter: blur(16px);
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    .card-antrian {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 18px;
+    }
+    .btn-panggil {
+        width: 100%;
+        justify-content: center;
+    }
+}

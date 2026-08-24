@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Display Antrian TV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <link href="logo-puskesmas.png" rel="icon">
+    <style>
+        /* ============================================================
+           GAYA TAMPILAN TV (dengan pemisahan AON/AOFF + durasi tunggu)
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0b1a;
+            background-image: radial-gradient(ellipse at 20% 50%, #1a1040 0%, #0b0b1a 70%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            position: relative;
+        }
+
+        .tv-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1600px;
+            width: 100%;
+            height: 92vh;
+            min-height: 600px;
+        }
+
+        .tv-card {
+            background: rgba(20, 20, 50, 0.55);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 40px;
+            display: flex;
+            flex-direction: column;
+            color: white;
+            padding: 28px 20px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .tv-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .tv-card.k2 {
+            border-bottom: 6px solid #38bdf8;
+            box-shadow: 0 20px 60px -10px rgba(56, 189, 248, 0.15), inset 0 -2px 20px rgba(56, 189, 248, 0.05);
+        }
+        .tv-card.k3d {
+            border-bottom: 6px solid #34d399;
+            box-shadow: 0 20px 60px -10px rgba(52, 211, 153, 0.15), inset 0 -2px 20px rgba(52, 211, 153, 0.05);
+        }
+        .tv-card.k3l {
+            border-bottom: 6px solid #fbbf24;
+            box-shadow: 0 20px 60px -10px rgba(251, 191, 36, 0.15), inset 0 -2px 20px rgba(251, 191, 36, 0.05);
+        }
+
+        .panel-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+        .panel-logo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            background: white;
+            transition: transform 0.3s ease;
+        }
+        .panel-logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .called-section {
+            flex-shrink: 0;
+            text-align: center;
+            padding-bottom: 18px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tv-card h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+            background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .tv-card h2 i {
+            -webkit-text-fill-color: #38bdf8;
+            color: #38bdf8;
+            font-size: 1.5rem;
+        }
+        .tv-card.k2 h2 i {
+            color: #38bdf8;
+        }
+        .tv-card.k3d h2 i {
+            color: #34d399;
+        }
+        .tv-card.k3l h2 i {
+            color: #fbbf24;
+        }
+
+        .tv-card .klaster-sub {
+            font-size: 1.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.04);
+            display: inline-block;
+            padding: 2px 18px;
+            border-radius: 40px;
+            margin-bottom: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(4px);
+        }
+        .tv-card.k2 .klaster-sub {
+            color: #7dd3fc;
+        }
+        .tv-card.k3d .klaster-sub {
+            color: #6ee7b7;
+        }
+        .tv-card.k3l .klaster-sub {
+            color: #fcd34d;
+        }
+
+        .dokter-tv {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 4px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 4px;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+        }
+        .dokter-tv i {
+            margin-right: 8px;
+            font-size: 1rem;
+            color: #0d9488;
+        }
+        .tv-card.k2 .dokter-tv i {
+            color: #38bdf8;
+        }
+        .tv-card.k3d .dokter-tv i {
+            color: #34d399;
+        }
+        .tv-card.k3l .dokter-tv i {
+            color: #fbbf24;
+        }
+
+        .tv-card .nomor {
+            font-size: 5.5rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin: 2px 0 0 0;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+            line-height: 1.1;
+        }
+
+        .tv-card .nama {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin: 6px 0 0 0;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px 20px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(4px);
+            display: block;
+            max-width: 92%;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: unset;
+            word-break: break-word;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tv-card .status-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #94a3b8;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 16px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            display: block;
+            margin-top: 12px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ---------- WAITING SECTION (dengan sub-bagian AON/AOFF) ---------- */
+        .waiting-section {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+            padding-right: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .waiting-section::-webkit-scrollbar {
+            width: 4px;
+        }
+        .waiting-section::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+
+        .waiting-sub {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .waiting-sub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #94a3b8;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+        }
+        .waiting-sub-header .sub-count {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #cbd5e1;
+        }
+        .waiting-sub-header .sub-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .waiting-sub-header .sub-label .badge-jenis-sub {
+            display: inline-block;
+            padding: 0 8px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            border: 1px solid transparent;
+            background: #e2e8f0;
+            color: #334155;
+        }
+        .badge-jenis-sub.aon {
+            background: rgba(56, 189, 248, 0.15);
+            color: #7dd3fc;
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+        .badge-jenis-sub.aoff {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fcd34d;
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+
+        .waiting-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .waiting-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 6px 12px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 1.0rem;
+            transition: background 0.2s;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        .waiting-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .waiting-item .nomor-waiting {
+            font-weight: 700;
+            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0 10px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+        .waiting-item .nama-waiting {
+            color: #f1f5f9;
+            font-weight: 500;
+            font-size: 1.0rem;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: unset;
+            word-break: break-word;
+            flex: 1 1 auto;
+            min-width: 70px;
+        }
+        .waiting-item .posisi-waiting {
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0 10px;
+            border-radius: 30px;
+            flex-shrink: 0;
+        }
+        /* Durasi tunggu di TV */
+        .durasi-tv {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #818cf8;
+            background: rgba(99, 102, 241, 0.15);
+            padding: 2px 10px;
+            border-radius: 30px;
+            white-space: nowrap;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .empty-waiting-sub {
+            color: #64748b;
+            text-align: center;
+            padding: 6px 0;
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        /* Total badge di header tetap ada untuk total keseluruhan */
+        .waiting-main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+        .waiting-main-header .count-badge {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 14px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        .tv-card.berkedip {
+            animation: neonPulse 0.6s ease-in-out 3;
+        }
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+            }
+            50% {
+                box-shadow: 0 0 60px rgba(255, 215, 0, 0.25), 0 0 120px rgba(255, 215, 0, 0.05);
+                border-color: rgba(255, 215, 0, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        #overlay-suara {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(8, 8, 24, 0.92);
+            backdrop-filter: blur(24px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            transition: opacity 0.6s ease;
+        }
+        #overlay-suara.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #overlay-suara h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+        #overlay-suara p {
+            font-size: 1.4rem;
+            color: #94a3b8;
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        #overlay-suara p span {
+            font-size: 0.9rem;
+            color: #475569;
+        }
+        .btn-aktifkan-suara {
+            padding: 24px 64px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #38bdf8, #6366f1);
+            border: none;
+            border-radius: 80px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-aktifkan-suara:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 70px rgba(99, 102, 241, 0.5);
+        }
+        #status-suara {
+            margin-top: 24px;
+            color: #34d399;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        #indikator-antrean {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            color: #fbbf24;
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            z-index: 100;
+            display: none;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 1200px) {
+            .tv-container {
+                grid-template-columns: repeat(2, 1fr);
+                height: auto;
+                gap: 20px;
+            }
+            .tv-card {
+                min-height: 380px;
+            }
+            .tv-card .nama {
+                font-size: 1.8rem;
+            }
+            .waiting-item {
+                font-size: 0.95rem;
+                padding: 6px 10px;
+            }
+            .waiting-item .nama-waiting {
+                font-size: 0.95rem;
+            }
+            .waiting-item .nomor-waiting {
+                font-size: 0.9rem;
+            }
+            .panel-logo img {
+                width: 80px;
+                height: 80px;
+            }
+            .panel-logo {
+                margin-bottom: 22px;
+            }
+            .tv-card h2 {
+                font-size: 2.2rem;
+            }
+            .tv-card .klaster-sub {
+                font-size: 1.4rem;
+            }
+            .dokter-tv {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tv-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .tv-card {
+                min-height: 320px;
+                padding: 20px 16px;
+            }
+            .tv-card .nomor {
+                font-size: 4rem;
+            }
+            .tv-card .nama {
+                font-size: 1.6rem;
+                padding: 4px 16px;
+            }
+            .tv-card h2 {
+                font-size: 1.8rem;
+            }
+            .tv-card .klaster-sub {
+                font-size: 1.2rem;
+                padding: 2px 14px;
+            }
+            .dokter-tv {
+                font-size: 0.9rem;
+                padding: 2px 14px;
+            }
+            .tv-card .status-text {
+                font-size: 0.8rem;
+                margin-top: 10px;
+            }
+            .waiting-item {
+                font-size: 0.9rem;
+                padding: 5px 8px;
+                gap: 6px;
+            }
+            .waiting-item .nama-waiting {
+                font-size: 0.9rem;
+                min-width: 50px;
+            }
+            .waiting-item .nomor-waiting {
+                font-size: 0.8rem;
+                padding: 0 6px;
+            }
+            .waiting-item .posisi-waiting {
+                font-size: 0.75rem;
+                padding: 0 6px;
+            }
+            .waiting-sub-header {
+                font-size: 0.7rem;
+            }
+            .waiting-sub-header .sub-count {
+                font-size: 0.65rem;
+            }
+            #overlay-suara h1 {
+                font-size: 2.8rem;
+            }
+            .btn-aktifkan-suara {
+                padding: 18px 36px;
+                font-size: 1.4rem;
+            }
+            .panel-logo img {
+                width: 70px;
+                height: 70px;
+            }
+            .panel-logo {
+                margin-bottom: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tv-card .nomor {
+                font-size: 3rem;
+            }
+            .tv-card .nama {
+                font-size: 1.2rem;
+            }
+            .tv-card .klaster-sub {
+                font-size: 1rem;
+            }
+            .tv-card h2 {
+                font-size: 1.5rem;
+            }
+            .dokter-tv {
+                font-size: 0.8rem;
+                padding: 2px 10px;
+            }
+            .tv-card .status-text {
+                font-size: 0.7rem;
+                margin-top: 8px;
+            }
+            .waiting-item {
+                font-size: 0.8rem;
+                padding: 4px 6px;
+                gap: 4px;
+            }
+            .waiting-item .nama-waiting {
+                font-size: 0.8rem;
+                min-width: 40px;
+            }
+            .waiting-item .nomor-waiting {
+                font-size: 0.7rem;
+                padding: 0 4px;
+            }
+            .waiting-item .posisi-waiting {
+                font-size: 0.65rem;
+                padding: 0 4px;
+            }
+            .waiting-sub-header {
+                font-size: 0.6rem;
+            }
+            .waiting-sub-header .sub-count {
+                font-size: 0.6rem;
+            }
+            .panel-logo img {
+                width: 56px;
+                height: 56px;
+            }
+            .panel-logo {
+                margin-bottom: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- OVERLAY AKTIVASI SUARA -->
+    <div id="overlay-suara">
+        <h1><i class="fas fa-volume-up"></i> Aktifkan Suara</h1>
+        <p>Klik tombol di bawah untuk mengaktifkan suara<br /><span>(Suara akan mengantre otomatis, tidak saling tumpang tindih)</span></p>
+        <button class="btn-aktifkan-suara" onclick="aktifkanSuara()"><i class="fas fa-microphone"></i> Aktifkan Suara</button>
+        <div id="status-suara"></div>
+    </div>
+
+    <div id="indikator-antrean"><i class="fas fa-volume-up" style="margin-right: 8px;"></i> Antrean suara: <span id="jumlah-antrean">0</span></div>
+
+    <!-- KONTEN TV (3 PANEL) -->
+    <div class="tv-container" id="tvContainer">
+        <!-- Panel K2 -->
+        <div class="tv-card k2" id="tvK2">
+            <div class="panel-logo">
+                <img src="logo-puskesmas.png" alt="Logo Puskesmas" />
+            </div>
+            <div class="called-section">
+                <h2> Klaster 2</h2>
+                <div class="klaster-sub">Anak & Remaja</div>
+                <div class="dokter-tv" id="dokterK2"><i class="fas fa-user-md"></i> <span id="dokterNamaK2">Memuat...</span></div>
+                <div class="nomor" id="nomorK2">-</div>
+                <div class="nama" id="namaK2">Menunggu</div>
+                <div class="status-text" id="statusK2">Belum ada panggilan</div>
+            </div>
+            <div class="waiting-section" id="waitingK2">
+                <div class="waiting-main-header">
+                    <span><i class="fas fa-clock"></i> Antrian Menunggu</span>
+                    <span class="count-badge" id="countK2">0</span>
+                </div>
+                <!-- Sub: AON -->
+                <div class="waiting-sub" id="waitingSubK2AON">
+                    <div class="waiting-sub-header">
+                        <span class="sub-label"><i class="fas fa-globe" style="color:#38bdf8;"></i> Antrian Online <span class="badge-jenis-sub aon">AON</span></span>
+                        <span class="sub-count" id="countSubK2AON">0</span>
+                    </div>
+                    <div class="waiting-list" id="listK2AON">
+                        <div class="empty-waiting-sub">Tidak ada antrian online</div>
+                    </div>
+                </div>
+                <!-- Sub: AOFF -->
+                <div class="waiting-sub" id="waitingSubK2AOFF">
+                    <div class="waiting-sub-header">
+                        <span class="sub-label"><i class="fas fa-hospital-user" style="color:#fbbf24;"></i> Antrian Offline <span class="badge-jenis-sub aoff">AOFF</span></span>
+                        <span class="sub-count" id="countSubK2AOFF">0</span>
+                    </div>
+                    <div class="waiting-list" id="listK2AOFF">
+                        <div class="empty-waiting-sub">Tidak ada antrian offline</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel K3D (Usia Dewasa) -->
+        <div class="tv-card k3d" id="tvK3D">
+            <div class="panel-logo">
+                <img src="logo-puskesmas.png" alt="Logo Puskesmas" />
+            </div>
+            <div class="called-section">
+                <h2> Klaster 3D</h2>
+                <div class="klaster-sub">Usia Dewasa</div>
+                <div class="dokter-tv" id="dokterK3D"><i class="fas fa-user-md"></i> <span id="dokterNamaK3D">Memuat...</span></div>
+                <div class="nomor" id="nomorK3D">-</div>
+                <div class="nama" id="namaK3D">Menunggu</div>
+                <div class="status-text" id="statusK3D">Belum ada panggilan</div>
+            </div>
+            <div class="waiting-section" id="waitingK3D">
+                <div class="waiting-main-header">
+                    <span><i class="fas fa-clock"></i> Antrian Menunggu</span>
+                    <span class="count-badge" id="countK3D">0</span>
+                </div>
+                <!-- Sub: AON -->
+                <div class="waiting-sub" id="waitingSubK3DAON">
+                    <div class="waiting-sub-header">
+                        <span class="sub-label"><i class="fas fa-globe" style="color:#38bdf8;"></i> Antrian Online <span class="badge-jenis-sub aon">AON</span></span>
+                        <span class="sub-count" id="countSubK3DAON">0</span>
+                    </div>
+                    <div class="waiting-list" id="listK3DAON">
+                        <div class="empty-waiting-sub">Tidak ada antrian online</div>
+                    </div>
+                </div>
+                <!-- Sub: AOFF -->
+                <div class="waiting-sub" id="waitingSubK3DAOFF">
+                    <div class="waiting-sub-header">
+                        <span class="sub-label"><i class="fas fa-hospital-user" style="color:#fbbf24;"></i> Antrian Offline <span class="badge-jenis-sub aoff">AOFF</span></span>
+                        <span class="sub-count" id="countSubK3DAOFF">0</span>
+                    </div>
+                    <div class="waiting-list" id="listK3DAOFF">
+                        <div class="empty-waiting-sub">Tidak ada antrian offline</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel K3L (Usia Lanjut) -->
+        <div class="tv-card k3l" id="tvK3L">
+            <div class="panel-logo">
+                <img src="logo-puskesmas.png" alt="Logo Puskesmas" />
+            </div>
+            <div class="called-section">
+                <h2> Klaster 3L</h2>
+                <div class="klaster-sub">Usia Lanjut</div>
+                <div class="dokter-tv" id="dokterK3L"><i class="fas fa-user-md"></i> <span id="dokterNamaK3L">Memuat...</span></div>
+                <div class="nomor" id="nomorK3L">-</div>
+                <div class="nama" id="namaK3L">Menunggu</div>
+                <div class="status-text" id="statusK3L">Belum ada panggilan</div>
+            </div>
+            <div class="waiting-section" id="waitingK3L">
+                <div class="waiting-main-header">
+                    <span><i class="fas fa-clock"></i> Antrian Menunggu</span>
+                    <span class="count-badge" id="countK3L">0</span>
+                </div>
+                <!-- Sub: AON -->
+                <div class="waiting-sub" id="waitingSubK3LAON">
+                    <div class="waiting-sub-header">
+                        <span class="sub-label"><i class="fas fa-globe" style="color:#38bdf8;"></i> Antrian Online <span class="badge-jenis-sub aon">AON</span></span>
+                        <span class="sub-count" id="countSubK3LAON">0</span>
+                    </div>
+                    <div class="waiting-list" id="listK3LAON">
+                        <div class="empty-waiting-sub">Tidak ada antrian online</div>
+                    </div>
+                </div>
+                <!-- Sub: AOFF -->
+                <div class="waiting-sub" id="waitingSubK3LAOFF">
+                    <div class="waiting-sub-header">
+                        <span class="sub-label"><i class="fas fa-hospital-user" style="color:#fbbf24;"></i> Antrian Offline <span class="badge-jenis-sub aoff">AOFF</span></span>
+                        <span class="sub-count" id="countSubK3LAOFF">0</span>
+                    </div>
+                    <div class="waiting-list" id="listK3LAOFF">
+                        <div class="empty-waiting-sub">Tidak ada antrian offline</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // ============================================================
+        // 1. FUNGSI KONVERSI ANGKA KE KATA (BAHASA INDONESIA)
+        // ============================================================
+        function angkaKeKata(angka) {
+            if (typeof angka !== 'number' || isNaN(angka)) return '';
+            if (angka === 0) return 'nol';
+
+            const satuan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan'];
+            const belasan = ['sepuluh', 'sebelas', 'dua belas', 'tiga belas', 'empat belas', 'lima belas',
+                'enam belas', 'tujuh belas', 'delapan belas', 'sembilan belas'
+            ];
+
+            if (angka < 10) return satuan[angka];
+            if (angka < 20) {
+                if (angka === 10) return 'sepuluh';
+                return belasan[angka - 10];
+            }
+            if (angka < 100) {
+                const puluhan = Math.floor(angka / 10);
+                const sisa = angka % 10;
+                if (sisa === 0) return satuan[puluhan] + ' puluh';
+                return satuan[puluhan] + ' puluh ' + satuan[sisa];
+            }
+            if (angka < 1000) {
+                const ratusan = Math.floor(angka / 100);
+                const sisa = angka % 100;
+                let hasil = (ratusan === 1) ? 'seratus' : satuan[ratusan] + ' ratus';
+                if (sisa === 0) return hasil;
+                return hasil + ' ' + angkaKeKata(sisa);
+            }
+            return angka.toString();
+        }
+
+        // ============================================================
+        // 2. FUNGSI FORMAT DURASI (SAMA SEPERTI DI INDEX.HTML)
+        // ============================================================
+        function formatDurasi(ms) {
+            if (!ms || ms < 0) return '—';
+            const seconds = Math.floor(ms / 1000);
+            if (seconds < 60) return 'baru saja';
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return `${minutes} menit`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours} jam`;
+            const days = Math.floor(hours / 24);
+            if (days < 7) return `${days} hari`;
+            const weeks = Math.floor(days / 7);
+            return `${weeks} minggu`;
+        }
+
+        // ============================================================
+        // 3. KONFIGURASI SUARA (Voice AI)
+        // ============================================================
+        const synth = window.speechSynthesis;
+        let suaraTerpilih = null;
+        let suaraDiizinkan = false;
+        const queueSuara = [];
+        let sedangBerbicara = false;
+
+        function pilihSuaraTerbaik() {
+            if (!synth) return null;
+            const voices = synth.getVoices();
+            let voice = voices.find(v =>
+                (v.name.includes('Google') || v.name.includes('Wavenet')) &&
+                (v.lang.includes('id') || v.lang.includes('ID'))
+            );
+            if (!voice) voice = voices.find(v =>
+                (v.name.includes('Microsoft') || v.name.includes('Andika')) &&
+                (v.lang.includes('id') || v.lang.includes('ID'))
+            );
+            if (!voice) voice = voices.find(v => v.lang.includes('id') || v.lang.includes('ID'));
+            if (!voice && voices.length > 0) voice = voices[0];
+            return voice;
+        }
+
+        if (synth) {
+            synth.onvoiceschanged = () => { suaraTerpilih = pilihSuaraTerbaik(); };
+            setTimeout(() => { suaraTerpilih = pilihSuaraTerbaik(); }, 300);
+        }
+
+        function aktifkanSuara() {
+            if (!synth) {
+                document.getElementById('status-suara').textContent = '❌ Browser tidak mendukung.';
+                return;
+            }
+            const testUcap = new SpeechSynthesisUtterance('Selamat datang di sistem antrian pasien, Suara telah diaktifkan.');
+            testUcap.lang = 'id-ID';
+            testUcap.rate = 0.9;
+            testUcap.pitch = 1.05;
+            if (suaraTerpilih) testUcap.voice = suaraTerpilih;
+            synth.speak(testUcap);
+            suaraDiizinkan = true;
+            document.getElementById('overlay-suara').classList.add('hidden');
+            document.getElementById('status-suara').textContent = '✅ Suara Teller aktif!';
+        }
+
+        function updateIndikatorAntrean() {
+            const el = document.getElementById('indikator-antrean');
+            const elJumlah = document.getElementById('jumlah-antrean');
+            const total = queueSuara.length + (sedangBerbicara ? 1 : 0);
+            if (total > 0) {
+                el.style.display = 'block';
+                elJumlah.textContent = total;
+            } else {
+                el.style.display = 'none';
+            }
+        }
+
+        function prosesAntreanSuara() {
+            if (sedangBerbicara || queueSuara.length === 0 || !suaraDiizinkan) {
+                updateIndikatorAntrean();
+                return;
+            }
+            const item = queueSuara.shift();
+            updateIndikatorAntrean();
+            const { nomor, nama, klaster } = item;
+
+            function formatNomorAntrian(nomor) {
+                if (!nomor) return '';
+                const str = nomor.toString().trim();
+                const parts = str.split('-');
+                if (parts.length !== 2) return str;
+                const before = parts[0];
+                const after = parts[1];
+
+                const matchHurufAngka = before.match(/^([A-Z]+)(\d*)$/);
+                let beforeUcap = '';
+                if (matchHurufAngka) {
+                    const huruf = matchHurufAngka[1];
+                    const angka = matchHurufAngka[2];
+                    const hurufPerKarakter = huruf.split('').join(' ');
+                    const digitMap = {
+                        '0': 'nol', '1': 'satu', '2': 'dua', '3': 'tiga', '4': 'empat',
+                        '5': 'lima', '6': 'enam', '7': 'tujuh', '8': 'delapan', '9': 'sembilan'
+                    };
+                    let angkaUcap = '';
+                    if (angka) {
+                        angkaUcap = angka.split('').map(d => digitMap[d] || d).join(' ');
+                    }
+                    beforeUcap = hurufPerKarakter + (angkaUcap ? ' ' + angkaUcap : '');
+                } else {
+                    const digitMap = {
+                        '0': 'nol', '1': 'satu', '2': 'dua', '3': 'tiga', '4': 'empat',
+                        '5': 'lima', '6': 'enam', '7': 'tujuh', '8': 'delapan', '9': 'sembilan'
+                    };
+                    beforeUcap = before.split('').map(d => digitMap[d] || d).join(' ');
+                }
+
+                let afterUcap = '';
+                const angkaUrut = parseInt(after, 10);
+                if (!isNaN(angkaUrut)) {
+                    afterUcap = angkaKeKata(angkaUrut);
+                } else {
+                    const digitMap = {
+                        '0': 'nol', '1': 'satu', '2': 'dua', '3': 'tiga', '4': 'empat',
+                        '5': 'lima', '6': 'enam', '7': 'tujuh', '8': 'delapan', '9': 'sembilan'
+                    };
+                    afterUcap = after.split('').map(d => digitMap[d] || d).join(' ');
+                }
+                return beforeUcap + ' ' + afterUcap;
+            }
+
+            function normalizeNama(nama) {
+                if (!nama) return '';
+                return nama.toLowerCase().trim();
+            }
+
+            const nomorFormatted = formatNomorAntrian(nomor);
+            const namaNormal = normalizeNama(nama);
+
+            const mapKlasterFormal = {
+                'K2': 'Klaster dua, Pelayanan Anak dan Remaja',
+                'K3D': 'Klaster tiga D, Pelayanan Usia Dewasa',
+                'K3L': 'Klaster tiga L, Pelayanan Usia Lanjut'
+            };
+            const klasterNormal = mapKlasterFormal[klaster] || klaster;
+
+            const teks =
+                `Nomor antrian ${nomorFormatted}, atas nama ${namaNormal}, dipersilakan menuju ${klasterNormal}.`;
+
+            const utterance = new SpeechSynthesisUtterance(teks);
+            utterance.lang = 'id-ID';
+            utterance.rate = 0.85;
+            utterance.pitch = 1.0;
+            utterance.volume = 1;
+            if (suaraTerpilih) utterance.voice = suaraTerpilih;
+
+            sedangBerbicara = true;
+            utterance.onend = () => {
+                sedangBerbicara = false;
+                prosesAntreanSuara();
+            };
+            utterance.onerror = () => {
+                sedangBerbicara = false;
+                prosesAntreanSuara();
+            };
+            synth.speak(utterance);
+        }
+
+        function tambahAntreanSuara(nomor, nama, klaster) {
+            if (!suaraDiizinkan) return;
+            queueSuara.push({ nomor, nama, klaster });
+            updateIndikatorAntrean();
+            prosesAntreanSuara();
+        }
+
+        // ============================================================
+        // 4. LOGIKA TV + INTEGRASI DOKTER + DURASI TUNGGU REAL-TIME
+        // ============================================================
+        let cachePanggilan = { K2: null, K3D: null, K3L: null };
+        let snapshotTerakhir = null; // untuk update durasi tanpa reload
+
+        function updateDokterTV(data) {
+            ['K2', 'K3D', 'K3L'].forEach(k => {
+                const el = document.getElementById(`dokterNama${k}`);
+                if (el) {
+                    el.textContent = data[k] || 'Belum ditentukan';
+                }
+            });
+        }
+
+        function renderTV(snapshot) {
+            snapshotTerakhir = snapshot;
+            const klasterList = ['K2', 'K3D', 'K3L'];
+            let dataKlaster = {
+                K2: { called: null, waitingAON: [], waitingAOFF: [] },
+                K3D: { called: null, waitingAON: [], waitingAOFF: [] },
+                K3L: { called: null, waitingAON: [], waitingAOFF: [] }
+            };
+
+            snapshot.forEach((childSnapshot) => {
+                const data = childSnapshot.val();
+                const k = data.klaster;
+                if (!dataKlaster[k]) return;
+
+                if (data.status === 'called') {
+                    const waktu = data.waktu_panggil || 0;
+                    if (!dataKlaster[k].called || waktu > (dataKlaster[k].called.waktu_panggil || 0)) {
+                        dataKlaster[k].called = data;
+                    }
+                } else if (data.status === 'waiting') {
+                    const jenis = data.jenis_antrian || 'AON';
+                    const entry = {
+                        nomor: data.nomor_antrian,
+                        nama: data.nama_pasien,
+                        waktu_daftar: data.waktu_daftar || 0,
+                        waktu_checkin: data.waktu_checkin || 0
+                    };
+                    if (jenis === 'AOFF') {
+                        dataKlaster[k].waitingAOFF.push(entry);
+                    } else {
+                        dataKlaster[k].waitingAON.push(entry);
+                    }
+                }
+            });
+
+            klasterList.forEach(k => {
+                dataKlaster[k].waitingAON.sort((a, b) => a.waktu_daftar - b.waktu_daftar);
+                dataKlaster[k].waitingAOFF.sort((a, b) => a.waktu_daftar - b.waktu_daftar);
+            });
+
+            const now = Date.now();
+
+            klasterList.forEach(k => {
+                const elNomor = document.getElementById(`nomor${k}`);
+                const elNama = document.getElementById(`nama${k}`);
+                const elStatus = document.getElementById(`status${k}`);
+                const elCard = document.getElementById(`tv${k}`);
+                const elCount = document.getElementById(`count${k}`);
+
+                const listAON = document.getElementById(`list${k}AON`);
+                const listAOFF = document.getElementById(`list${k}AOFF`);
+                const countAON = document.getElementById(`countSub${k}AON`);
+                const countAOFF = document.getElementById(`countSub${k}AOFF`);
+
+                const called = dataKlaster[k].called;
+                const waitingAON = dataKlaster[k].waitingAON;
+                const waitingAOFF = dataKlaster[k].waitingAOFF;
+
+                // Update bagian dipanggil
+                if (called) {
+                    const nomor = called.nomor_antrian;
+                    const nama = called.nama_pasien;
+                    elNomor.textContent = nomor;
+                    elNama.textContent = nama;
+                    const waktuPanggil = new Date(called.waktu_panggil).toLocaleTimeString('id-ID', {
+                     hour: '2-digit',
+                     minute: '2-digit',
+                      hour12: false
+                    });
+                    elStatus.textContent = `Dipanggil ${waktuPanggil}`;
+
+                    const cacheKey = `${nomor}-${nama}-${called.waktu_panggil}`;
+                    if (cachePanggilan[k] !== cacheKey) {
+                        cachePanggilan[k] = cacheKey;
+                        elCard.classList.remove('berkedip');
+                        void elCard.offsetWidth;
+                        elCard.classList.add('berkedip');
+                        tambahAntreanSuara(nomor, nama, k);
+                    }
+                } else {
+                    elNomor.textContent = '-';
+                    elNama.textContent = 'Menunggu';
+                    elStatus.textContent = 'Belum ada panggilan';
+                    cachePanggilan[k] = null;
+                }
+
+                // Render waiting AON dengan durasi
+                if (waitingAON.length === 0) {
+                    listAON.innerHTML = `<div class="empty-waiting-sub">Tidak ada antrian online</div>`;
+                    countAON.textContent = '0';
+                } else {
+                    const maxShow = 5;
+                    const showItems = waitingAON.slice(0, maxShow);
+                    let html = '';
+                    showItems.forEach((item, index) => {
+                        const posisi = index + 1;
+                        // Hitung durasi: prioritas waktu_checkin, fallback waktu_daftar
+                        const startTime = item.waktu_checkin || item.waktu_daftar || 0;
+                        const durasiMs = startTime ? now - startTime : 0;
+                        const durasiStr = formatDurasi(durasiMs);
+                        html += `
+                                    <div class="waiting-item">
+                                        <span class="nomor-waiting">${item.nomor}</span>
+                                        <span class="nama-waiting">${item.nama}</span>
+                                        <span class="durasi-tv">⏱ ${durasiStr}</span>
+                                        <span class="posisi-waiting">#${posisi}</span>
+                                    </div>
+                                `;
+                    });
+                    if (waitingAON.length > maxShow) {
+                        html += `<div class="waiting-item" style="justify-content:center; color:#64748b; font-size:0.85rem; border-style:dashed;">
+                                    + ${waitingAON.length - maxShow} antrian lainnya
+                                </div>`;
+                    }
+                    listAON.innerHTML = html;
+                    countAON.textContent = waitingAON.length;
+                }
+
+                // Render waiting AOFF dengan durasi
+                if (waitingAOFF.length === 0) {
+                    listAOFF.innerHTML = `<div class="empty-waiting-sub">Tidak ada antrian offline</div>`;
+                    countAOFF.textContent = '0';
+                } else {
+                    const maxShow = 5;
+                    const showItems = waitingAOFF.slice(0, maxShow);
+                    let html = '';
+                    showItems.forEach((item, index) => {
+                        const posisi = index + 1;
+                        const startTime = item.waktu_checkin || item.waktu_daftar || 0;
+                        const durasiMs = startTime ? now - startTime : 0;
+                        const durasiStr = formatDurasi(durasiMs);
+                        html += `
+                                    <div class="waiting-item">
+                                        <span class="nomor-waiting">${item.nomor}</span>
+                                        <span class="nama-waiting">${item.nama}</span>
+                                        <span class="durasi-tv">⏱ ${durasiStr}</span>
+                                        <span class="posisi-waiting">#${posisi}</span>
+                                    </div>
+                                `;
+                    });
+                    if (waitingAOFF.length > maxShow) {
+                        html += `<div class="waiting-item" style="justify-content:center; color:#64748b; font-size:0.85rem; border-style:dashed;">
+                                    + ${waitingAOFF.length - maxShow} antrian lainnya
+                                </div>`;
+                    }
+                    listAOFF.innerHTML = html;
+                    countAOFF.textContent = waitingAOFF.length;
+                }
+
+                // Total count
+                const totalWaiting = waitingAON.length + waitingAOFF.length;
+                elCount.textContent = totalWaiting;
+            });
+        }
+
+        // Fungsi untuk update durasi tanpa reload data (setiap 5 detik)
+        function updateDurasi() {
+            if (snapshotTerakhir) {
+                renderTV(snapshotTerakhir);
+            }
+        }
+
+        // ============================================================
+        // 5. LISTENER FIREBASE
+        // ============================================================
+        database.ref('antrians').on('value', (snapshot) => {
+            renderTV(snapshot);
+        });
+
+        database.ref('dokter_assignments').on('value', (snapshot) => {
+            const data = snapshot.val() || {};
+            updateDokterTV(data);
+        });
+
+        // ============================================================
+        // 6. INISIALISASI & INTERVAL DURASI
+        // ============================================================
+        database.ref('dokter_assignments').once('value', (snapshot) => {
+            const data = snapshot.val() || {};
+            updateDokterTV(data);
+        });
+
+        // Update durasi setiap 5 detik (sama dengan index.html)
+        setInterval(updateDurasi, 5000);
+
+        console.log('📺 TV dengan pemisahan AON/AOFF, durasi tunggu real-time (5 detik), dan Voice AI siap!');
+    </script>
+</body>
+</html>
