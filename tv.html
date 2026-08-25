@@ -351,6 +351,44 @@
             color: #fbbf24;
         }
 
+        /* ===== JENIS ANTRIAN (baru) ===== */
+        .jenis-antrian {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 14px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 4px;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+        }
+        .jenis-antrian i {
+            margin-right: 6px;
+        }
+        .tv-card.k2 .jenis-antrian {
+            color: #7dd3fc;
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+        .tv-card.k2 .jenis-antrian i {
+            color: #38bdf8;
+        }
+        .tv-card.k3d .jenis-antrian {
+            color: #6ee7b7;
+            border-color: rgba(52, 211, 153, 0.3);
+        }
+        .tv-card.k3d .jenis-antrian i {
+            color: #34d399;
+        }
+        .tv-card.k3l .jenis-antrian {
+            color: #fcd34d;
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+        .tv-card.k3l .jenis-antrian i {
+            color: #fbbf24;
+        }
+
         .tv-card .nomor {
             font-size: 5.5rem;
             font-weight: 900;
@@ -493,7 +531,7 @@
         }
 
         /* ============================================================
-           TABEL DATA ANTRIAN MENUNGGU (matriks di bawah)
+           TABEL DATA ANTRIAN MENUNGGU – 3 KOLOM KLASTER
            ============================================================ */
         .table-container {
             width: 100%;
@@ -525,11 +563,13 @@
             -webkit-text-fill-color: #38bdf8;
             color: #38bdf8;
         }
+
         .table-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
         }
+
         .table-sub {
             background: rgba(255, 255, 255, 0.04);
             border-radius: 24px;
@@ -550,18 +590,8 @@
             align-items: center;
             gap: 10px;
         }
-        .table-sub h3 .badge-jenis {
-            font-size: 0.8rem;
-            background: rgba(56, 189, 248, 0.2);
-            padding: 2px 12px;
-            border-radius: 30px;
-            color: #7dd3fc;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-        .table-sub h3 .badge-jenis.aoff {
-            background: rgba(251, 191, 36, 0.2);
-            color: #fcd34d;
-            border-color: rgba(251, 191, 36, 0.3);
+        .table-sub h3 i {
+            font-size: 1.3rem;
         }
         .table-wrap {
             overflow-x: auto;
@@ -569,20 +599,23 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 1.2rem;
             color: #e2e8f0;
         }
-        .table-sub:first-child th {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(56, 189, 248, 0.08));
-            border-bottom: 2px solid rgba(56, 189, 248, 0.4);
-            color: #7dd3fc;
-            font-size: 1.1rem;
-        }
-        .table-sub:last-child th {
+        /* Warna header berbeda tiap klaster */
+        .table-sub:nth-child(1) th {
             background: linear-gradient(135deg, rgba(251, 191, 36, 0.25), rgba(251, 191, 36, 0.08));
             border-bottom: 2px solid rgba(251, 191, 36, 0.4);
             color: #fcd34d;
-            font-size: 1.1rem;
+        }
+        .table-sub:nth-child(2) th {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(56, 189, 248, 0.08));
+            border-bottom: 2px solid rgba(56, 189, 248, 0.4);
+            color: #7dd3fc;
+        }
+        .table-sub:nth-child(3) th {
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.25), rgba(52, 211, 153, 0.08));
+            border-bottom: 2px solid rgba(52, 211, 153, 0.4);
+            color: #6ee7b7;
         }
         th {
             text-align: left;
@@ -590,18 +623,22 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-size: 1.2rem;
         }
         td {
             padding: 12px 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            font-size: 1.2rem;
             font-weight: 500;
+            font-size: 1.2rem;
         }
-        .table-sub:first-child tr:hover td {
+        .table-sub:nth-child(1) tr:hover td {
+            background: rgba(251, 191, 36, 0.08);
+        }
+        .table-sub:nth-child(2) tr:hover td {
             background: rgba(56, 189, 248, 0.08);
         }
-        .table-sub:last-child tr:hover td {
-            background: rgba(251, 191, 36, 0.08);
+        .table-sub:nth-child(3) tr:hover td {
+            background: rgba(52, 211, 153, 0.08);
         }
         .empty-table {
             color: #64748b;
@@ -611,31 +648,28 @@
             font-size: 1.2rem;
         }
 
-        @media (max-width: 992px) {
-            .table-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .table-container {
-                padding: 16px;
-            }
-            .table-container h2 {
-                font-size: 1.6rem;
-            }
-            table {
-                font-size: 1.0rem;
-            }
-            th, td {
-                padding: 10px 8px;
-            }
+        /* ===== BADGE JENIS ANTRIAN (seperti di dashboard K2) ===== */
+        .badge-jenis-card {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            margin-left: 8px;
+            vertical-align: middle;
         }
-        @media (max-width: 480px) {
-            table {
-                font-size: 0.9rem;
-            }
-            th, td {
-                padding: 8px 6px;
-            }
+        .badge-jenis-card.aon {
+            background: rgba(56, 189, 248, 0.15);
+            color: #7dd3fc;
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+        .badge-jenis-card.aoff {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fcd34d;
+            border-color: rgba(251, 191, 36, 0.3);
         }
 
         /* ============================================================
@@ -669,6 +703,9 @@
             .dokter-tv {
                 font-size: 1rem;
             }
+            .jenis-antrian {
+                font-size: 0.85rem;
+            }
             .tv-header {
                 padding: 14px 20px;
                 flex-wrap: wrap;
@@ -685,6 +722,13 @@
             }
             .header-right .tanggal {
                 font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .table-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
             }
         }
 
@@ -714,6 +758,10 @@
             .dokter-tv {
                 font-size: 0.9rem;
                 padding: 2px 14px;
+            }
+            .jenis-antrian {
+                font-size: 0.8rem;
+                padding: 2px 12px;
             }
             .tv-card .status-text {
                 font-size: 0.8rem;
@@ -773,6 +821,27 @@
                 font-size: 0.85rem;
                 padding: 2px 10px;
             }
+
+            .table-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .table-container {
+                padding: 16px;
+            }
+            .table-container h2 {
+                font-size: 1.6rem;
+            }
+            table {
+                font-size: 1.0rem;
+            }
+            th, td {
+                padding: 10px 8px;
+                font-size: 1.1rem;
+            }
+            .empty-table {
+                font-size: 1.1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -790,6 +859,10 @@
             }
             .dokter-tv {
                 font-size: 0.8rem;
+                padding: 2px 10px;
+            }
+            .jenis-antrian {
+                font-size: 0.7rem;
                 padding: 2px 10px;
             }
             .tv-card .status-text {
@@ -826,6 +899,16 @@
                         rgba(4, 20, 12, 0.94) 50%,
                         rgba(12, 40, 28, 0.94) 70%,
                         rgba(30, 20, 6, 0.96) 100%);
+            }
+            table {
+                font-size: 0.9rem;
+            }
+            th, td {
+                padding: 8px 6px;
+                font-size: 1.0rem;
+            }
+            .empty-table {
+                font-size: 1.0rem;
             }
         }
     </style>
@@ -868,6 +951,7 @@
                 <h2> Klaster 3</h2>
                 <div class="klaster-sub">USIA LANJUT</div>
                 <div class="dokter-tv" id="dokterK3L"><i class="fas fa-user-md"></i> <span id="dokterNamaK3L">Memuat...</span></div>
+                <div class="jenis-antrian" id="jenisAntrianK3L">-</div>
                 <div class="nomor" id="nomorK3L">-</div>
                 <div class="nama" id="namaK3L">Menunggu</div>
                 <div class="status-text" id="statusK3L">Belum ada panggilan</div>
@@ -882,6 +966,7 @@
                 <h2> Klaster 2</h2>
                 <div class="klaster-sub">ANAK & REMAJA</div>
                 <div class="dokter-tv" id="dokterK2"><i class="fas fa-user-md"></i> <span id="dokterNamaK2">Memuat...</span></div>
+                <div class="jenis-antrian" id="jenisAntrianK2">-</div>
                 <div class="nomor" id="nomorK2">-</div>
                 <div class="nama" id="namaK2">Menunggu</div>
                 <div class="status-text" id="statusK2">Belum ada panggilan</div>
@@ -896,6 +981,7 @@
                 <h2> Klaster 3</h2>
                 <div class="klaster-sub">USIA DEWASA</div>
                 <div class="dokter-tv" id="dokterK3D"><i class="fas fa-user-md"></i> <span id="dokterNamaK3D">Memuat...</span></div>
+                <div class="jenis-antrian" id="jenisAntrianK3D">-</div>
                 <div class="nomor" id="nomorK3D">-</div>
                 <div class="nama" id="namaK3D">Menunggu</div>
                 <div class="status-text" id="statusK3D">Belum ada panggilan</div>
@@ -904,35 +990,49 @@
     </div>
 
     <!-- ============================================================
-         CONTAINER TABEL DATA ANTRIAN MENUNGGU (matriks)
+         CONTAINER TABEL ANTRIAN MENUNGGU – 3 KOLOM KLASTER
          ============================================================ -->
     <div class="table-container" id="tableWaitingContainer">
         <h2><i class="fas fa-list-ul"></i>ANTRIAN MENUNGGU</h2>
         <div class="table-grid">
-            <!-- Tabel Online -->
+            <!-- Klaster 3 Usia Lanjut -->
             <div class="table-sub">
-                <h3><i class="fas fa-globe" style="color:#38bdf8;"></i> ANTRIAN ONLINE <span class="badge-jenis">AON</span></h3>
+                <h3><i class="fas fa-users" style="color:#fbbf24;"></i> KLASTER 3 USIA LANJUT</h3>
                 <div class="table-wrap">
-                    <table id="tableAON">
+                    <table>
                         <thead>
-                            <tr><th>NOMOR</th><th>NAMA</th><th>KLASTER TUJUAN</th></tr>
+                            <tr><th>NOMOR</th><th>NAMA</th></tr>
                         </thead>
-                        <tbody id="tbodyAON">
-                            <tr><td colspan="3" class="empty-table">Tidak ada antrian online</td></tr>
+                        <tbody id="tbodyK3L">
+                            <tr><td colspan="2" class="empty-table">Tidak ada antrian</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <!-- Tabel Offline -->
+            <!-- Klaster 2 Anak & Remaja -->
             <div class="table-sub">
-                <h3><i class="fas fa-hospital-user" style="color:#fbbf24;"></i> ANTRIAN OFFLINE <span class="badge-jenis aoff">AOFF</span></h3>
+                <h3><i class="fas fa-child" style="color:#38bdf8;"></i> KLASTER 2 ANAK & REMAJA</h3>
                 <div class="table-wrap">
-                    <table id="tableAOFF">
+                    <table>
                         <thead>
-                            <tr><th>NOMOR</th><th>NAMA</th><th>KLASTER TUJUAN</th></tr>
+                            <tr><th>NOMOR</th><th>NAMA</th></tr>
                         </thead>
-                        <tbody id="tbodyAOFF">
-                            <tr><td colspan="3" class="empty-table">Tidak ada antrian offline</td></tr>
+                        <tbody id="tbodyK2">
+                            <tr><td colspan="2" class="empty-table">Tidak ada antrian</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Klaster 3 Usia Dewasa -->
+            <div class="table-sub">
+                <h3><i class="fas fa-user" style="color:#34d399;"></i> KLASTER 3 USIA DEWASA</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>NOMOR</th><th>NAMA</th></tr>
+                        </thead>
+                        <tbody id="tbodyK3D">
+                            <tr><td colspan="2" class="empty-table">Tidak ada antrian</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1190,6 +1290,7 @@
                 const elNama = document.getElementById(`nama${k}`);
                 const elStatus = document.getElementById(`status${k}`);
                 const elCard = document.getElementById(`tv${k}`);
+                const elJenis = document.getElementById(`jenisAntrian${k}`);
 
                 const called = dataKlaster[k].called;
 
@@ -1205,6 +1306,18 @@
                     });
                     elStatus.textContent = `Dipanggil ${waktuPanggil}`;
 
+                    if (called.jenis_antrian) {
+                        if (called.jenis_antrian === 'AON') {
+                            elJenis.innerHTML = `<i class="fas fa-globe"></i> Antrian Online`;
+                        } else if (called.jenis_antrian === 'AOFF') {
+                            elJenis.innerHTML = `<i class="fas fa-hospital-user"></i> Antrian Offline`;
+                        } else {
+                            elJenis.textContent = called.jenis_antrian;
+                        }
+                    } else {
+                        elJenis.innerHTML = '-';
+                    }
+
                     const cacheKey = `${nomor}-${nama}-${called.waktu_panggil}`;
                     if (cachePanggilan[k] !== cacheKey) {
                         cachePanggilan[k] = cacheKey;
@@ -1217,61 +1330,89 @@
                     elNomor.textContent = '-';
                     elNama.textContent = 'Menunggu';
                     elStatus.textContent = 'Belum ada panggilan';
+                    elJenis.innerHTML = '-';
                     cachePanggilan[k] = null;
                 }
             });
         }
 
         // ============================================================
-        // 5. RENDER TABEL ANTRIAN MENUNGGU (matriks)
+        // 5. RENDER TABEL ANTRIAN MENUNGGU – 3 KOLOM KLASTER
+        //    Dengan badge AON/AOFF dan diurutkan berdasarkan nomor
         // ============================================================
         function renderTable(snapshot) {
-            const mapKlaster = {
-                'K2': 'Anak & Remaja',
-                'K3D': 'Usia Dewasa',
-                'K3L': 'Usia Lanjut'
+            const dataKlaster = {
+                'K2': [],
+                'K3D': [],
+                'K3L': []
             };
-
-            const dataAON = [];
-            const dataAOFF = [];
 
             snapshot.forEach((childSnapshot) => {
                 const data = childSnapshot.val();
                 if (data.status === 'waiting') {
-                    const entry = {
-                        nomor: data.nomor_antrian || '-',
-                        nama: data.nama_pasien || '-',
-                        klaster: data.klaster || '-'
-                    };
-                    if (data.jenis_antrian === 'AOFF') {
-                        dataAOFF.push(entry);
-                    } else {
-                        dataAON.push(entry);
+                    const klaster = data.klaster;
+                    if (dataKlaster[klaster]) {
+                        dataKlaster[klaster].push({
+                            nomor: data.nomor_antrian || '-',
+                            nama: data.nama_pasien || '-',
+                            jenis: data.jenis_antrian || '-'
+                        });
                     }
                 }
+            });
+
+            // Fungsi untuk mengekstrak angka urut dari nomor antrian
+            function extractNumber(nomorStr) {
+                if (!nomorStr) return 0;
+                // Coba ambil angka setelah tanda '-'
+                const parts = nomorStr.split('-');
+                if (parts.length === 2) {
+                    const num = parseInt(parts[1], 10);
+                    if (!isNaN(num)) return num;
+                }
+                // Jika tidak ada '-', coba ambil semua digit di akhir string
+                const match = nomorStr.match(/(\d+)$/);
+                if (match) {
+                    return parseInt(match[1], 10);
+                }
+                return 0; // fallback
+            }
+
+            // Urutkan setiap klaster berdasarkan nomor antrian (numerik)
+            Object.keys(dataKlaster).forEach(key => {
+                dataKlaster[key].sort((a, b) => {
+                    const numA = extractNumber(a.nomor);
+                    const numB = extractNumber(b.nomor);
+                    return numA - numB;
+                });
             });
 
             function renderTabel(tbodyId, data) {
                 const tbody = document.getElementById(tbodyId);
                 if (!tbody) return;
                 if (data.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="3" class="empty-table">Tidak ada antrian</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="2" class="empty-table">Tidak ada antrian</td></tr>`;
                     return;
                 }
                 let html = '';
                 data.forEach(item => {
-                    const klasterNama = mapKlaster[item.klaster] || item.klaster;
+                    let namaWithJenis = item.nama;
+                    if (item.jenis === 'AON') {
+                        namaWithJenis += ' <span class="badge-jenis-card aon">AON</span>';
+                    } else if (item.jenis === 'AOFF') {
+                        namaWithJenis += ' <span class="badge-jenis-card aoff">AOFF</span>';
+                    }
                     html += `<tr>
                                 <td>${item.nomor}</td>
-                                <td>${item.nama}</td>
-                                <td>${klasterNama}</td>
+                                <td>${namaWithJenis}</td>
                             </tr>`;
                 });
                 tbody.innerHTML = html;
             }
 
-            renderTabel('tbodyAON', dataAON);
-            renderTabel('tbodyAOFF', dataAOFF);
+            renderTabel('tbodyK2', dataKlaster['K2']);
+            renderTabel('tbodyK3D', dataKlaster['K3D']);
+            renderTabel('tbodyK3L', dataKlaster['K3L']);
         }
 
         // ============================================================
@@ -1295,11 +1436,9 @@
             updateDokterTV(data);
         });
 
-        // Update tampilan TV setiap 5 detik (tanpa mengubah tabel karena sudah realtime)
         setInterval(() => {
             if (snapshotTerakhir) {
                 renderTV(snapshotTerakhir);
-                // Tabel tidak perlu diupdate karena data sudah realtime, tapi amankan
                 renderTable(snapshotTerakhir);
             }
         }, 5000);
@@ -1319,7 +1458,7 @@
         updateJamTanggal();
         setInterval(updateJamTanggal, 1000);
 
-        console.log('📺 TV tanpa antrian menunggu di panel – hanya tabel matriks.');
+        console.log('📺 TV dengan badge AON/AOFF pada tabel antrian menunggu, dan diurutkan berdasarkan nomor antrian.');
     </script>
 </body>
 </html>
