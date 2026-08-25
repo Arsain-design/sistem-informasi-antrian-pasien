@@ -846,6 +846,19 @@
             }
         }
 
+        // Fungsi untuk mengekstrak angka urut dari nomor antrian (misal AON-003 -> 3)
+        function extractNumber(nomorStr) {
+            if (!nomorStr) return 0;
+            const parts = nomorStr.split('-');
+            if (parts.length === 2) {
+                const num = parseInt(parts[1], 10);
+                if (!isNaN(num)) return num;
+            }
+            const match = nomorStr.match(/(\d+)$/);
+            if (match) return parseInt(match[1], 10);
+            return 0;
+        }
+
         // ================================================================
         //  4.  FUNGSI DOKTER
         // ================================================================
@@ -861,12 +874,26 @@
 
         // ================================================================
         //  5.  RENDER UTAMA — dengan filter pencarian & pisahkan AON/AOFF
+        //      + sorting: waiting by nomor (asc), called by waktu_panggil (desc)
         // ================================================================
         function render() {
             const term = searchTerm.trim().toLowerCase();
 
-            const waitingList = allPatients.filter(p => p.status === 'waiting');
-            const calledList = allPatients.filter(p => p.status === 'called');
+            // Ambil semua data, lalu filter berdasarkan status
+            let waitingList = allPatients.filter(p => p.status === 'waiting');
+            let calledList = allPatients.filter(p => p.status === 'called');
+
+            // Urutkan waiting berdasarkan nomor antrian (numerik, ascending)
+            waitingList.sort((a, b) => {
+                const numA = extractNumber(a.nomor_antrian);
+                const numB = extractNumber(b.nomor_antrian);
+                return numA - numB;
+            });
+
+            // Urutkan called berdasarkan waktu panggil (descending, terbaru di atas)
+            calledList.sort((a, b) => {
+                return (b.waktu_panggil || 0) - (a.waktu_panggil || 0);
+            });
 
             // Total pasien yang sudah check in (waiting + called) — tidak terpengaruh filter
             const totalCheckin = waitingList.length + calledList.length;
@@ -1040,13 +1067,7 @@
                     waktu_checkin: data.waktu_checkin || 0,
                 });
             });
-            raw.sort((a, b) => {
-                if (a.status === b.status) {
-                    return (String(a.nomor_antrian) || '').localeCompare(String(b.nomor_antrian) || '');
-                }
-                return a.status === 'waiting' ? -1 : 1;
-            });
-
+            // Tidak dilakukan sorting di sini, karena render akan mengurutkan sesuai kebutuhan
             allPatients = raw;
             render();
         });
@@ -1109,7 +1130,7 @@
         updateTanggal();
         loadDokter();
 
-        console.log(`🖥️ Dashboard ${KLASTER} siap · durasi tunggu real-time diperbarui setiap 5 detik.`);
+        console.log(`🖥️ Dashboard ${KLASTER} siap · urutan waiting (nomor) & called (waktu panggil terbaru) diperbarui.`);
     </script>
 
 </body>
