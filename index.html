@@ -1612,9 +1612,9 @@
             <div class="header-left">
                 <img src="logo-puskesmas.png" alt="Logo Puskesmas" class="logo-puskesmas" id="logoPuskesmas">
                 <div class="judul">
-                    <h1><i style="color:#4338ca; margin-right:8px;"></i> UPTD PUSKESMAS WAJO</h1>
+                    <h1><i style="color:#4338ca; margin-right:8px;"></i> Sistem Informasi Antrian &amp; Pemanggilan Pasien</h1>
                     <p>
-                        <span class="badge-readonly"><i class="fas fa-lock"></i> SIAP - Sistem Informasi Antrian Pasien</span>
+                        <span class="badge-readonly">UPTD Puskesmas Wajo</span>
                         <span id="tanggalSekarang" style="margin-left: 12px; color: #64748b; font-weight: 500;">📅
                             Memuat tanggal...</span>
                     </p>
@@ -1643,13 +1643,13 @@
             <div class="quick-access">
                 <span class="label-qs"><i class="fas fa-rocket"></i> Pemanggilan Antrian :</span>
                 <a href="dashboard-k2.html" class="quick-btn k2" target="_blank">
-                    <span class="icon"><i class="fas fa-child"></i></span> KL 2 (Anak & Remaja)
+                    <span class="icon"><i class="fas fa-child"></i></span> KL 2 (Anak &amp; Remaja)
                 </a>
                 <a href="dashboard-k3d.html" class="quick-btn k3d" target="_blank">
-                    <span class="icon"><i class="fas fa-user"></i></span> KL 3D (Usia Dewasa)
+                    <span class="icon"><i class="fas fa-user"></i></span> KL 3D (Dewasa)
                 </a>
                 <a href="dashboard-k3l.html" class="quick-btn k3l" target="_blank">
-                    <span class="icon"><i class="fas fa-user"></i></span> KL 3L (Usia Lanjut)
+                    <span class="icon"><i class="fas fa-user"></i></span> KL 3L (Lansia)
                 </a>
                 <a href="tv.html" class="quick-btn tv" target="_blank">
                     <span class="icon"><i class="fas fa-tv"></i></span> Tampilan TV
@@ -1714,7 +1714,7 @@
             <div class="section-icon"><i class="fas fa-layer-group"></i></div>
             <div>
                 <h2>PEMBAGIAN KLASTER</h2>
-                <p>Pantau antrian pasien per klaster pelayanan (Anak &amp; Remaja, Usia Dewasa, Usia Lanjut)</p>
+                <p>Pantau antrian pasien per klaster pelayanan (Anak &amp; Remaja, Dewasa, Lansia)</p>
             </div>
         </div>
 
@@ -1725,7 +1725,7 @@
                 <div class="panel-header">
                     <div class="panel-title-group">
                         <h2><i class="fas fa-child" style="color:#38bdf8;"></i> Klaster 2</h2>
-                        <span class="badge-klaster badge-k2">Anak & Remaja</span>
+                        <span class="badge-klaster badge-k2">Anak &amp; Remaja</span>
                     </div>
                     <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; width:100%;">
                         <span class="dokter-tag" id="dokterK2"><i class="fas fa-user-md"></i> <span
@@ -1742,7 +1742,7 @@
                 <div class="panel-header">
                     <div class="panel-title-group">
                         <h2><i class="fas fa-user" style="color:#34d399;"></i> Klaster 3D</h2>
-                        <span class="badge-klaster badge-k3d">Usia Dewasa</span>
+                        <span class="badge-klaster badge-k3d">Dewasa</span>
                     </div>
                     <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; width:100%;">
                         <span class="dokter-tag" id="dokterK3D"><i class="fas fa-user-md"></i> <span
@@ -1759,7 +1759,7 @@
                 <div class="panel-header">
                     <div class="panel-title-group">
                         <h2><i class="fas fa-user" style="color:#fbbf24;"></i> Klaster 3L</h2>
-                        <span class="badge-klaster badge-k3l">Usia Lanjut</span>
+                        <span class="badge-klaster badge-k3l">Lansia</span>
                     </div>
                     <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; width:100%;">
                         <span class="dokter-tag" id="dokterK3L"><i class="fas fa-user-md"></i> <span
@@ -1793,9 +1793,9 @@
                     <label><i class="fas fa-people-group"></i> Klaster Tujuan</label>
                     <select id="modalKlaster" required>
                         <option value="">-- Pilih --</option>
-                        <option value="K2">Klaster 2 (Anak & Remaja)</option>
-                        <option value="K3D">Klaster 3D (Usia Dewasa)</option>
-                        <option value="K3L">Klaster 3L (Usia Lanjut)</option>
+                        <option value="K2">Klaster 2 - Anak &amp; Remaja</option>
+                        <option value="K3D">Klaster 3D - Dewasa</option>
+                        <option value="K3L">Klaster 3L - Lansia</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -1833,9 +1833,9 @@
                     <label><i class="fas fa-people-group"></i> Klaster Tujuan</label>
                     <select id="editKlaster" required>
                         <option value="">-- Pilih --</option>
-                        <option value="K2">Klaster 2 (Anak & Remaja)</option>
-                        <option value="K3D">Klaster 3D (Usia Dewasa)</option>
-                        <option value="K3L">Klaster 3L (Usia Lanjut)</option>
+                        <option value="K2">Klaster 2 - Anak &amp; Remaja</option>
+                        <option value="K3D">Klaster 3D - Dewasa</option>
+                        <option value="K3L">Klaster 3L - Lansia</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -1871,9 +1871,9 @@
                 <label for="selectKlaster">📋 Pilih Klaster Tujuan</label>
                 <select id="selectKlaster" class="select-modern">
                     <option value="">-- Pilih Klaster --</option>
-                    <option value="K2">K2 - Anak & Remaja</option>
-                    <option value="K3D">K3D - Usia Dewasa</option>
-                    <option value="K3L">K3L - Usia Lanjut</option>
+                    <option value="K2">K2 - Anak &amp; Remaja</option>
+                    <option value="K3D">K3D - Dewasa</option>
+                    <option value="K3L">K3L - Lansia</option>
                 </select>
             </div>
 
@@ -1937,13 +1937,13 @@
         // 1. KONFIGURASI FIREBASE (JANGAN DIUBAH)
         // ============================================================
         const firebaseConfig = {
-            apiKey: "AIzaSyDnCndz5ys_XhZyP5MQYrBDbGN0KGXq-Yw",
+            apiKey: "AIzaSyB-nAMpSMXfomAxtq5Ntebv0IYOmuKitj0",
             authDomain: "sistem-antrian-puskesmas.firebaseapp.com",
             databaseURL: "https://sistem-antrian-puskesmas-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "sistem-antrian-puskesmas",
             storageBucket: "sistem-antrian-puskesmas.firebasestorage.app",
-            messagingSenderId: "1010056001059",
-            appId: "1:1010056001059:web:eb8993ff44a282aa015de5"
+            messagingSenderId: "727104534075",
+            appId: "1:727104534075:web:9814d1598c9f846e050e1e"
         };
 
         firebase.initializeApp(firebaseConfig);
@@ -2012,7 +2012,15 @@
         }
 
         // ============================================================
-        // 4. RESET SEMUA
+        // 4. FUNGSI PEMBANTU SORTIR NOMOR ANTRIAN (NUMERIK)
+        // ============================================================
+        function getNomorAngka(nomor) {
+            const angka = parseInt(nomor.replace(/[^0-9]/g, ''), 10);
+            return isNaN(angka) ? Infinity : angka;
+        }
+
+        // ============================================================
+        // 5. RESET SEMUA
         // ============================================================
         async function resetAllKlaster() {
             const confirmFirst = confirm(`⚠️ PERINGATAN BESAR!\n\nAnda akan menghapus SEMUA data:\n- Antrian pasien (SEMUA KLASTER)\n- Data dokter (penugasan)\n\nData yang dihapus TIDAK DAPAT DIKEMBALIKAN.\n\nApakah Anda yakin ingin melanjutkan?`);
@@ -2060,7 +2068,7 @@
         }
 
         // ============================================================
-        // 5. KELOLA ANTRIAN (SELECTIVE DELETE)
+        // 6. KELOLA ANTRIAN (SELECTIVE DELETE)
         // ============================================================
         let klasterSaatIni = '';
         let dataPasienKelola = [];
@@ -2077,7 +2085,7 @@
             document.getElementById('cariPasienKelola').value = '';
             document.getElementById('clearCariKelola').style.display = 'none';
 
-            const label = { K2: 'Klaster 2 (Anak & Remaja)', K3D: 'Klaster 3D (Usia Dewasa)', K3L: 'Klaster 3L (Usia Lanjut)' };
+            const label = { K2: 'Klaster 2 (Anak & Remaja)', K3D: 'Klaster 3D (Dewasa)', K3L: 'Klaster 3L (Lansia)' };
             document.getElementById('kelolaTitle').innerHTML =
                 `<i class="fas fa-users-cog"></i> Kelola Antrian - ${label[klaster]}`;
 
@@ -2110,7 +2118,8 @@
                     }
                 });
 
-                waitingList.sort((a, b) => a.nomor.localeCompare(b.nomor));
+                // ===== URUTKAN : waiting (numerik), called (waktu panggil terbaru) =====
+                waitingList.sort((a, b) => getNomorAngka(a.nomor) - getNomorAngka(b.nomor));
                 calledList.sort((a, b) => b.waktu_panggil - a.waktu_panggil);
 
                 dataPasienKelola = [...waitingList, ...calledList];
@@ -2144,7 +2153,6 @@
                 html += `<div class="empty-state">${query ? 'Tidak ada yang cocok' : 'Tidak ada antrian menunggu'}</div>`;
             } else {
                 waitingList.forEach(item => {
-                    // Gunakan waktu check-in jika ada, fallback ke waktu daftar
                     const waktuTampil = item.waktu_checkin || item.waktu_daftar;
                     const waktu = waktuTampil ? new Date(waktuTampil).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
                     const checked = selectedIds.has(item.id) ? 'checked' : '';
@@ -2273,14 +2281,14 @@
         }
 
         // ============================================================
-        // 6. VARIABEL GLOBAL & RENDER UTAMA
+        // 7. VARIABEL GLOBAL & RENDER UTAMA
         // ============================================================
         const panelIds = ['K2', 'K3D', 'K3L'];
         let searchQuery = '';
         let allDataSnapshot = null;
 
         // ============================================================
-        // 7. RENDER SEMUA PANEL + DURASI WAKTU TUNGGU REAL-TIME
+        // 8. RENDER SEMUA PANEL + DURASI WAKTU TUNGGU REAL-TIME
         // ============================================================
         function renderSemua(snapshot) {
             allDataSnapshot = snapshot;
@@ -2341,21 +2349,21 @@
             panelIds.forEach(k => {
                 const container = document.getElementById(`body${k}`);
 
-                const waitingList = dataKlaster[k].waiting
-                    .sort((a, b) => a.nomor.localeCompare(b.nomor))
-                    .filter(item => {
-                        if (!query) return true;
-                        return item.nomor.toLowerCase().includes(query) ||
-                            item.nama.toLowerCase().includes(query);
-                    });
+                // Ambil daftar waiting dan called, lalu filter berdasarkan query
+                let waitingList = dataKlaster[k].waiting.filter(item => {
+                    if (!query) return true;
+                    return item.nomor.toLowerCase().includes(query) ||
+                        item.nama.toLowerCase().includes(query);
+                });
+                let calledList = dataKlaster[k].called.filter(item => {
+                    if (!query) return true;
+                    return item.nomor.toLowerCase().includes(query) ||
+                        item.nama.toLowerCase().includes(query);
+                });
 
-                const calledList = dataKlaster[k].called
-                    .sort((a, b) => b.waktu_panggil - a.waktu_panggil)
-                    .filter(item => {
-                        if (!query) return true;
-                        return item.nomor.toLowerCase().includes(query) ||
-                            item.nama.toLowerCase().includes(query);
-                    });
+                // ===== URUTKAN : waiting (numerik ascending), called (waktu panggil terbaru) =====
+                waitingList.sort((a, b) => getNomorAngka(a.nomor) - getNomorAngka(b.nomor));
+                calledList.sort((a, b) => b.waktu_panggil - a.waktu_panggil);
 
                 totalHasilPencarian += waitingList.length + calledList.length;
 
@@ -2370,10 +2378,8 @@
                     html += `<div class="empty-state">${query ? 'Tidak ada yang cocok' : 'Tidak ada antrian menunggu'}</div>`;
                 } else {
                     waitingList.forEach(item => {
-                        // Gunakan waktu check-in jika ada, fallback ke waktu daftar
                         const waktuTampil = item.waktu_checkin || item.waktu_daftar;
                         const waktuStr = waktuTampil ? new Date(waktuTampil).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
-                        // Durasi dihitung dari waktu check-in atau daftar
                         const startTime = item.waktu_checkin || item.waktu_daftar || 0;
                         const durasi = Date.now() - startTime;
                         const durasiStr = formatDurasi(durasi);
@@ -2440,7 +2446,7 @@
         }
 
         // ============================================================
-        // 8. PANEL JENIS ANTRIAN (REGISTERED) + DURASI
+        // 9. PANEL JENIS ANTRIAN (REGISTERED) + DURASI
         // ============================================================
         function renderJenisAntrian(snapshot, query) {
             const containerAON = document.getElementById('bodyAON');
@@ -2470,6 +2476,7 @@
                 }
             });
 
+            // Urutkan registered berdasarkan waktu daftar (terlama di atas)
             registeredAON.sort((a, b) => a.waktu_daftar - b.waktu_daftar);
             registeredAOFF.sort((a, b) => a.waktu_daftar - b.waktu_daftar);
 
@@ -2533,7 +2540,7 @@
         }
 
         // ============================================================
-        // 9. CHECK IN, EDIT, HAPUS PASIEN
+        // 10. CHECK IN, EDIT, HAPUS PASIEN
         // ============================================================
         async function checkInPasien(id) {
             const btn = document.querySelector(`.btn-checkin[data-id="${id}"]`);
@@ -2678,7 +2685,7 @@
         }
 
         // ============================================================
-        // 10. PENCARIAN
+        // 11. PENCARIAN
         // ============================================================
         function handleSearch(e) {
             searchQuery = e.target.value;
@@ -2706,7 +2713,7 @@
         });
 
         // ============================================================
-        // 11. MODAL TAMBAH PASIEN
+        // 12. MODAL TAMBAH PASIEN
         // ============================================================
         function bukaModal() {
             document.getElementById('modalDaftar').classList.add('active');
@@ -2781,7 +2788,7 @@
         });
 
         // ============================================================
-        // 12. MODAL KELOLA DOKTER
+        // 13. MODAL KELOLA DOKTER
         // ============================================================
         const DAFTAR_DOKTER = [
             'dr. ERNAWATY MADI',
@@ -2827,8 +2834,8 @@
                 const klasterList = ['K2', 'K3D', 'K3L'];
                 const labelMap = {
                     K2: 'K2 - Anak & Remaja',
-                    K3D: 'K3D - Usia Dewasa',
-                    K3L: 'K3L - Usia Lanjut'
+                    K3D: 'K3D - Dewasa',
+                    K3L: 'K3L - Lansia'
                 };
                 const clsMap = { K2: 'k2', K3D: 'k3d', K3L: 'k3l' };
                 let html = '';
@@ -2927,7 +2934,7 @@
         }
 
         // ============================================================
-        // 13. LISTENER FIREBASE + INTERVAL DURASI REAL-TIME
+        // 14. LISTENER FIREBASE + INTERVAL DURASI REAL-TIME
         // ============================================================
         database.ref('antrians').on('value', (snapshot) => {
             renderSemua(snapshot);
@@ -2949,7 +2956,7 @@
         }, 5000);
 
         // ============================================================
-        // 14. TANGGAL
+        // 15. TANGGAL
         // ============================================================
         function updateTanggal() {
             const el = document.getElementById('tanggalSekarang');
@@ -2965,7 +2972,7 @@
         updateTanggal();
 
         // ============================================================
-        // 15. INISIALISASI
+        // 16. INISIALISASI
         // ============================================================
         database.ref('dokter_assignments').once('value', (snap) => {
             updateDokterTags(snap.val() || {});
