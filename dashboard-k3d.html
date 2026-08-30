@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Antrian KL 3D · Dewasa</title>
-    <link href="logo-puskesmas.png" rel="icon">
+    <link href="logo-puskesmas.png" rel="icon" />
 
     <!-- ===== STYLES ===== -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -22,20 +22,20 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #ecfdf5;
             min-height: 100vh;
-            padding: 24px 32px;                  /* lebih luas */
+            padding: 24px 32px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
         }
 
         .container {
-            max-width: 1600px;                   /* diperbesar dari 1100px */
+            max-width: 1600px;
             width: 100%;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
             border-radius: 40px 40px 32px 32px;
-            padding: 36px 44px 44px;             /* lebih besar */
+            padding: 36px 44px 44px;
             box-shadow: 0 20px 60px -16px rgba(16, 185, 129, 0.18), 0 4px 20px rgba(0, 0, 0, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.6);
             transition: all 0.2s;
@@ -59,7 +59,7 @@
         }
 
         .header-left h1 {
-            font-size: 1.8rem;                   /* lebih besar */
+            font-size: 1.8rem;
             font-weight: 700;
             letter-spacing: -0.02em;
             color: #0f172a;
@@ -79,7 +79,7 @@
             color: #064e3b;
             padding: 4px 16px;
             border-radius: 40px;
-            font-size: 0.85rem;                 /* lebih besar */
+            font-size: 0.85rem;
             font-weight: 700;
             letter-spacing: 0.3px;
             white-space: nowrap;
@@ -91,9 +91,9 @@
             align-items: center;
             gap: 6px;
             background: rgba(52, 211, 153, 0.12);
-            padding: 6px 18px 6px 12px;          /* lebih besar */
+            padding: 6px 18px 6px 12px;
             border-radius: 40px;
-            font-size: 0.9rem;                   /* lebih besar */
+            font-size: 0.9rem;
             font-weight: 600;
             color: #064e3b;
             border: 1px solid rgba(52, 211, 153, 0.2);
@@ -113,7 +113,7 @@
             margin-top: 6px;
             margin-bottom: 16px;
             color: #475569;
-            font-size: 1rem;                    /* lebih besar */
+            font-size: 1rem;
         }
 
         .header-sub i {
@@ -127,10 +127,186 @@
             font-weight: 500;
         }
 
+        /* ---------- HEADER CALLED ---------- */
+        .header-called {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
+            padding: 14px 20px 12px;
+            margin: 10px 0 18px 0;
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .header-called .called-header-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .header-called .called-header-label i {
+            color: #34d399;
+            font-size: 1.2rem;
+        }
+
+        .header-called .called-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            min-height: 60px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-called-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            padding: 12px 24px;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px 24px;
+            flex-wrap: wrap;
+            border: 2px solid #34d399;
+            box-shadow: 0 4px 16px rgba(52, 211, 153, 0.15);
+            transition: all 0.3s;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .card-called-header .nomor {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #0f172a;
+        }
+
+        .card-called-header .nama {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1.2rem;
+        }
+
+        .badge-alt-header {
+            background: rgba(220, 38, 38, 0.15);
+            color: #991b1b;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            line-height: 1.4;
+        }
+
+        .card-called-header .badge-jenis-card {
+            display: inline-block;
+            padding: 2px 14px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .card-called-header .badge-jenis-card.aon {
+            background: rgba(56, 189, 248, 0.15);
+            color: #0369a1;
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .card-called-header .badge-jenis-card.aoff {
+            background: rgba(251, 191, 36, 0.15);
+            color: #92400e;
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+
+        .card-called-header .waktu {
+            font-size: 0.85rem;
+            color: #64748b;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .card-called-header .durasi-tunggu {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #4338ca;
+            background: rgba(99, 102, 241, 0.08);
+            padding: 2px 14px;
+            border-radius: 30px;
+            white-space: nowrap;
+        }
+
+        .card-called-header .actions {
+            display: inline-flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .card-called-header .btn-panggil-header,
+        .card-called-header .btn-lewati-header,
+        .card-called-header .btn-selanjutnya-header {
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-called-header .btn-panggil-header {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+            box-shadow: 0 2px 8px -2px rgba(16, 185, 129, 0.3);
+        }
+        .card-called-header .btn-panggil-header:hover {
+            transform: scale(1.05);
+        }
+
+        .card-called-header .btn-lewati-header {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+            box-shadow: 0 2px 8px -2px rgba(239, 68, 68, 0.3);
+        }
+        .card-called-header .btn-lewati-header:hover {
+            transform: scale(1.05);
+        }
+
+        .card-called-header .btn-selanjutnya-header {
+            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+            color: white;
+            box-shadow: 0 2px 8px -2px rgba(99, 102, 241, 0.3);
+        }
+        .card-called-header .btn-selanjutnya-header:hover {
+            transform: scale(1.05);
+        }
+
+        .header-called .empty-state-box {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            font-style: italic;
+            padding: 12px 0;
+            text-align: center;
+            width: 100%;
+        }
+
         /* ---------- SEARCH BAR ---------- */
         .search-wrapper {
             position: relative;
-            margin: 12px 0 22px 0;              /* lebih lega */
+            margin: 12px 0 22px 0;
         }
 
         .search-wrapper .search-icon {
@@ -146,7 +322,7 @@
 
         .search-wrapper input {
             width: 100%;
-            padding: 16px 52px 16px 52px;        /* lebih besar */
+            padding: 16px 52px 16px 52px;
             border-radius: 60px;
             border: 2px solid #e2e8f0;
             background: white;
@@ -222,12 +398,12 @@
 
         .tab-btn {
             width: auto;
-            padding: 12px 36px;                 /* lebih besar */
+            padding: 12px 36px;
             border-radius: 40px 40px 0 0;
             background: transparent;
             color: #64748b;
             font-weight: 600;
-            font-size: 1.05rem;                 /* lebih besar */
+            font-size: 1.05rem;
             box-shadow: none;
             border: none;
             cursor: pointer;
@@ -266,7 +442,44 @@
             color: #065f46;
         }
 
-        /* ---------- PATIENT LISTS (HORIZONTAL BOX) ---------- */
+        /* ---------- FILTER SORT ---------- */
+        .filter-sort {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0 14px 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-sort label {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-sort select {
+            padding: 8px 16px;
+            border-radius: 40px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            font-weight: 500;
+            color: #0f172a;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .filter-sort select:focus {
+            border-color: #34d399;
+            box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.15);
+        }
+
+        /* ---------- PATIENT LISTS ---------- */
         .tab-content {
             display: none;
             padding-top: 18px;
@@ -279,15 +492,14 @@
         .horizontal-box {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 28px;                         /* lebih lebar */
+            gap: 28px;
         }
 
-        /* === BOX ONLINE (AON) — Warna BIRU (konsisten dengan K2) === */
         .jenis-box.aon-box {
             background: rgba(56, 189, 248, 0.06);
             border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 28px;                /* lebih besar */
-            padding: 20px 22px 18px;            /* lebih besar */
+            border-radius: 28px;
+            padding: 20px 22px 18px;
             backdrop-filter: blur(4px);
             display: flex;
             flex-direction: column;
@@ -298,14 +510,12 @@
         .jenis-box.aon-box .box-header {
             border-bottom: 2px solid rgba(56, 189, 248, 0.2);
         }
-
         .jenis-box.aon-box .box-header .label .badge-jenis {
             background: rgba(56, 189, 248, 0.15);
             color: #0369a1;
             border-color: rgba(56, 189, 248, 0.3);
         }
 
-        /* === BOX OFFLINE (AOFF) — Warna KUNING (konsisten) === */
         .jenis-box.aoff-box {
             background: rgba(251, 191, 36, 0.06);
             border: 1px solid rgba(251, 191, 36, 0.2);
@@ -321,7 +531,6 @@
         .jenis-box.aoff-box .box-header {
             border-bottom: 2px solid rgba(251, 191, 36, 0.2);
         }
-
         .jenis-box.aoff-box .box-header .label .badge-jenis {
             background: rgba(251, 191, 36, 0.15);
             color: #92400e;
@@ -338,7 +547,7 @@
 
         .jenis-box .box-header .label {
             font-weight: 700;
-            font-size: 1.05rem;                 /* lebih besar */
+            font-size: 1.05rem;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -369,7 +578,7 @@
             flex-direction: column;
             gap: 8px;
             flex: 1;
-            max-height: 460px;                  /* lebih tinggi */
+            max-height: 460px;
             overflow-y: auto;
             padding-right: 4px;
         }
@@ -394,8 +603,8 @@
         .card-antrian {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(8px);
-            padding: 14px 20px;                 /* lebih besar */
-            border-radius: 20px;                /* lebih besar */
+            padding: 14px 20px;
+            border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -414,7 +623,7 @@
             left: 0;
             top: 0;
             bottom: 0;
-            width: 5px;                        /* lebih tebal */
+            width: 5px;
             border-radius: 0 4px 4px 0;
             background: #34d399;
         }
@@ -428,10 +637,16 @@
         .card-antrian.called::before {
             background: #94a3b8;
         }
-
         .card-antrian.called {
             opacity: 0.7;
             background: rgba(255, 255, 255, 0.4);
+        }
+        .card-antrian.completed::before {
+            background: #a3a3a3;
+        }
+        .card-antrian.completed {
+            opacity: 0.5;
+            background: rgba(240, 240, 240, 0.6);
         }
 
         .card-antrian .info-left {
@@ -444,17 +659,29 @@
 
         .card-antrian .info-left .nomor {
             font-weight: 700;
-            font-size: 1.1rem;                  /* lebih besar */
+            font-size: 1.1rem;
             color: #0f172a;
         }
 
         .card-antrian .info-left .nama {
             font-weight: 500;
             color: #1e293b;
-            font-size: 1rem;                    /* lebih besar */
+            font-size: 1rem;
         }
 
-        /* Badge jenis di dalam kartu — AON BIRU, AOFF KUNING */
+        .badge-alt {
+            background: rgba(220, 38, 38, 0.12);
+            color: #991b1b;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            line-height: 1.4;
+        }
+
         .card-antrian .info-left .badge-jenis-card {
             display: inline-block;
             padding: 2px 12px;
@@ -478,7 +705,6 @@
             border-color: rgba(251, 191, 36, 0.3);
         }
 
-        /* Durasi tunggu */
         .durasi-tunggu {
             font-size: 0.8rem;
             font-weight: 600;
@@ -490,6 +716,10 @@
         }
 
         .card-antrian.called .durasi-tunggu {
+            color: #64748b;
+            background: rgba(148, 163, 184, 0.15);
+        }
+        .card-antrian.completed .durasi-tunggu {
             color: #64748b;
             background: rgba(148, 163, 184, 0.15);
         }
@@ -517,9 +747,9 @@
 
         .btn-panggil {
             width: auto;
-            padding: 8px 22px;                  /* lebih besar */
+            padding: 8px 22px;
             border-radius: 40px;
-            font-size: 0.85rem;                 /* lebih besar */
+            font-size: 0.85rem;
             font-weight: 700;
             background: linear-gradient(135deg, #059669 0%, #10b981 100%);
             box-shadow: 0 4px 12px -4px rgba(16, 185, 129, 0.3);
@@ -536,7 +766,6 @@
             transform: scale(1.04) translateY(-1px);
             box-shadow: 0 8px 18px -6px rgba(16, 185, 129, 0.4);
         }
-
         .btn-panggil:active {
             transform: scale(0.96);
         }
@@ -562,9 +791,43 @@
             transform: scale(1.04) translateY(-1px);
             box-shadow: 0 8px 18px -6px rgba(245, 158, 11, 0.4);
         }
-
         .btn-panggil-ulang:active {
             transform: scale(0.96);
+        }
+
+        .btn-lewati {
+            width: auto;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            box-shadow: 0 4px 12px -4px rgba(239, 68, 68, 0.3);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        .btn-lewati:hover {
+            transform: scale(1.04) translateY(-1px);
+            box-shadow: 0 8px 18px -6px rgba(239, 68, 68, 0.4);
+        }
+        .btn-lewati:active {
+            transform: scale(0.96);
+        }
+
+        .label-selesai {
+            color: #64748b;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: rgba(148, 163, 184, 0.15);
+            padding: 4px 12px;
+            border-radius: 30px;
+            white-space: nowrap;
         }
 
         /* ---------- RESPONSIVE ---------- */
@@ -633,9 +896,37 @@
                 font-size: 1rem;
             }
             .btn-panggil,
-            .btn-panggil-ulang {
+            .btn-panggil-ulang,
+            .btn-lewati {
                 padding: 6px 16px;
                 font-size: 0.75rem;
+            }
+            .filter-sort {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .filter-sort select {
+                width: 100%;
+            }
+            .card-called-header {
+                padding: 10px 16px;
+                gap: 10px 16px;
+                flex-direction: column;
+                align-items: center;
+            }
+            .card-called-header .nomor {
+                font-size: 1.2rem;
+            }
+            .card-called-header .nama {
+                font-size: 1rem;
+            }
+            .card-called-header .actions {
+                width: 100%;
+                justify-content: center;
+            }
+            .header-called .called-list {
+                min-height: 80px;
             }
         }
 
@@ -677,6 +968,12 @@
             .box-content {
                 max-height: 340px;
             }
+            .card-called-header .btn-panggil-header,
+            .card-called-header .btn-lewati-header,
+            .card-called-header .btn-selanjutnya-header {
+                font-size: 0.7rem;
+                padding: 4px 12px;
+            }
         }
     </style>
 </head>
@@ -699,6 +996,16 @@
         <div class="header-sub">
             <span><i class="fas fa-calendar-alt"></i> <span class="tanggal" id="tanggalSekarang">Memuat tanggal...</span></span>
             <span><i class="fas fa-clipboard-list"></i> Total <span id="totalPasien">0</span> pasien</span>
+        </div>
+
+        <!-- ===== HEADER CALLED ===== -->
+        <div class="header-called" id="headerCalled">
+            <div class="called-header-label">
+                <i class="fas fa-bullhorn"></i> Sedang Dipanggil
+            </div>
+            <div class="called-list" id="listHeaderCalled">
+                <div class="empty-state-box">Belum ada pasien dipanggil</div>
+            </div>
         </div>
 
         <!-- ===== SEARCH BAR ===== -->
@@ -731,6 +1038,17 @@
 
         <!-- ===== TAB CONTENT ===== -->
         <div id="tab-waiting" class="tab-content active">
+            <!-- Filter Sort -->
+            <div class="filter-sort">
+                <label for="sortSelect"><i class="fas fa-arrow-up-wide-short"></i> Urutkan:</label>
+                <select id="sortSelect">
+                    <option value="nomor-asc">Nomor Antrian (kecil → besar)</option>
+                    <option value="nomor-desc">Nomor Antrian (besar → kecil)</option>
+                    <option value="checkin-oldest">Check In (terlama → terbaru)</option>
+                    <option value="checkin-newest">Check In (terbaru → terlama)</option>
+                </select>
+            </div>
+
             <div class="horizontal-box" id="daftarWaiting">
                 <!-- Box AON -->
                 <div class="jenis-box aon-box" id="waitingAON">
@@ -812,6 +1130,7 @@
         let allPatients = [];
         let searchTerm = '';
         let currentTab = 'waiting';
+        let sortOption = 'nomor-asc';
 
         // DOM refs
         const $ = (id) => document.getElementById(id);
@@ -823,6 +1142,8 @@
         const tanggalSekarang = $('tanggalSekarang');
         const countWaiting = $('count-waiting');
         const countCalled = $('count-called');
+        const sortSelect = $('sortSelect');
+        const listHeaderCalled = $('listHeaderCalled');
 
         // ================================================================
         //  3.  FUNGSI UTILITY
@@ -856,7 +1177,6 @@
             }
         }
 
-        // Fungsi untuk mengekstrak angka urut dari nomor antrian (misal AON-003 -> 3)
         function extractNumber(nomorStr) {
             if (!nomorStr) return 0;
             const parts = nomorStr.split('-');
@@ -883,29 +1203,234 @@
         }
 
         // ================================================================
-        //  5.  RENDER UTAMA — dengan filter pencarian & pisahkan AON/AOFF
-        //      + sorting: waiting by nomor (asc), called by waktu_panggil (desc)
+        //  5.  FUNGSI SORTING
+        // ================================================================
+        function sortPatients(list, option) {
+            const copy = [...list];
+            switch (option) {
+                case 'nomor-asc':
+                    copy.sort((a, b) => extractNumber(a.nomor_antrian) - extractNumber(b.nomor_antrian));
+                    break;
+                case 'nomor-desc':
+                    copy.sort((a, b) => extractNumber(b.nomor_antrian) - extractNumber(a.nomor_antrian));
+                    break;
+                case 'checkin-oldest': {
+                    const getTime = (p) => p.waktu_checkin || p.waktu_daftar || 0;
+                    copy.sort((a, b) => getTime(a) - getTime(b));
+                    break;
+                }
+                case 'checkin-newest': {
+                    const getTime = (p) => p.waktu_checkin || p.waktu_daftar || 0;
+                    copy.sort((a, b) => getTime(b) - getTime(a));
+                    break;
+                }
+                default:
+                    break;
+            }
+            return copy;
+        }
+
+        // ================================================================
+        //  6.  FUNGSI MENDAPATKAN WAITING LIST (TERFILTER & TERURUT)
+        // ================================================================
+        function getFilteredSortedWaiting() {
+            let waitingList = allPatients.filter(p => p.status === 'waiting');
+            const term = searchTerm.trim().toLowerCase();
+            if (term) {
+                waitingList = waitingList.filter(p => {
+                    const nomor = String(p.nomor_antrian || '').toLowerCase();
+                    const nama = String(p.nama_pasien || '').toLowerCase();
+                    return nomor.includes(term) || nama.includes(term);
+                });
+            }
+            waitingList = sortPatients(waitingList, sortOption);
+            return waitingList;
+        }
+
+        // ================================================================
+        //  7.  FUNGSI PANGGIL, LEWATI, SELANJUTNYA
+        // ================================================================
+
+        async function panggilPasien(id) {
+            try {
+                await database.ref('antrians/' + id).update({
+                    status: 'called',
+                    waktu_panggil: Date.now()
+                });
+                return true;
+            } catch (err) {
+                alert('❌ Gagal memanggil: ' + err.message);
+                return false;
+            }
+        }
+
+        async function panggilDariWaiting() {
+            const waiting = getFilteredSortedWaiting();
+            if (waiting.length === 0) {
+                alert('⚠️ Tidak ada antrian yang menunggu.');
+                return false;
+            }
+            const first = waiting[0];
+            return await panggilPasien(first.id);
+        }
+
+        async function lewatiDanPanggilBerikutnya(id) {
+            try {
+                await database.ref('antrians/' + id).update({
+                    status: 'skipped',
+                    waktu_skip: Date.now(),
+                    pernah_terlewat: true
+                });
+            } catch (err) {
+                alert('❌ Gagal melewati: ' + err.message);
+                return false;
+            }
+
+            const waiting = getFilteredSortedWaiting();
+            if (waiting.length === 0) {
+                return true;
+            }
+            const next = waiting[0];
+            return await panggilPasien(next.id);
+        }
+
+        async function selanjutnya() {
+            const calledList = allPatients.filter(p => p.status === 'called');
+            calledList.sort((a, b) => (b.waktu_panggil || 0) - (a.waktu_panggil || 0));
+            const currentCalled = calledList.length > 0 ? calledList[0] : null;
+
+            if (currentCalled) {
+                try {
+                    await database.ref('antrians/' + currentCalled.id).update({
+                        status: 'completed'
+                    });
+                } catch (err) {
+                    alert('❌ Gagal menyelesaikan pasien: ' + err.message);
+                    return false;
+                }
+            }
+
+            const waiting = getFilteredSortedWaiting();
+            if (waiting.length === 0) {
+                alert('⚠️ Tidak ada antrian yang menunggu.');
+                return false;
+            }
+            const next = waiting[0];
+            return await panggilPasien(next.id);
+        }
+
+        // ================================================================
+        //  8.  RENDER HEADER CALLED
+        // ================================================================
+        function renderHeaderCalled() {
+            const calledList = allPatients.filter(p => p.status === 'called');
+            calledList.sort((a, b) => (b.waktu_panggil || 0) - (a.waktu_panggil || 0));
+            const currentPatient = calledList.length > 0 ? calledList[0] : null;
+
+            if (!currentPatient) {
+                listHeaderCalled.innerHTML = `
+                    <div class="empty-state-box">Belum ada pasien dipanggil</div>
+                    <div class="card-called-header" style="border-color: #94a3b8; background: rgba(255,255,255,0.4);">
+                        <div class="actions" style="width:100%; justify-content:center;">
+                            <button class="btn-panggil-header" id="btnPanggilHeader">
+                                <i class="fas fa-bullhorn"></i> Panggil
+                            </button>
+                            <button class="btn-selanjutnya-header" id="btnSelanjutnyaHeader">
+                                <i class="fas fa-forward-step"></i> Selanjutnya
+                            </button>
+                        </div>
+                    </div>
+                `;
+                const btnPanggil = document.getElementById('btnPanggilHeader');
+                const btnSelanjutnya = document.getElementById('btnSelanjutnyaHeader');
+
+                btnPanggil.addEventListener('click', async function() {
+                    const success = await panggilDariWaiting();
+                    if (success) alert('✅ Pasien berhasil dipanggil!');
+                });
+
+                btnSelanjutnya.addEventListener('click', async function() {
+                    const success = await panggilDariWaiting();
+                    if (success) alert('✅ Pasien selanjutnya dipanggil!');
+                });
+                return;
+            }
+
+            const now = Date.now();
+            const durasiMs = currentPatient.waktu_panggil ? now - currentPatient.waktu_panggil : 0;
+            const durasiStr = formatDurasi(durasiMs);
+            const waktuStr = formatTime(currentPatient.waktu_panggil);
+            const badgeClass = (currentPatient.jenis_antrian === 'AOFF') ? 'aoff' : 'aon';
+            const altBadge = currentPatient.pernah_terlewat ? `<span class="badge-alt-header">ALT</span>` : '';
+
+            const html = `
+                <div class="card-called-header" data-id="${currentPatient.id}">
+                    <span class="nomor">${currentPatient.nomor_antrian}</span>
+                    <span class="nama">${currentPatient.nama_pasien}</span>
+                    ${altBadge}
+                    <span class="badge-jenis-card ${badgeClass}">${currentPatient.jenis_antrian}</span>
+                    <span class="waktu"><i class="fas fa-clock"></i> ${waktuStr}</span>
+                    <span class="durasi-tunggu">⏱ ${durasiStr}</span>
+                    <div class="actions">
+                        <button class="btn-panggil-header" data-id="${currentPatient.id}" data-nama="${currentPatient.nama_pasien}" data-nomor="${currentPatient.nomor_antrian}">
+                            <i class="fas fa-rotate-right"></i> Panggil Ulang
+                        </button>
+                        <button class="btn-lewati-header" data-id="${currentPatient.id}" data-nama="${currentPatient.nama_pasien}" data-nomor="${currentPatient.nomor_antrian}">
+                            <i class="fas fa-forward"></i> Lewati
+                        </button>
+                        <button class="btn-selanjutnya-header" data-id="${currentPatient.id}" data-nama="${currentPatient.nama_pasien}" data-nomor="${currentPatient.nomor_antrian}">
+                            <i class="fas fa-forward-step"></i> Selanjutnya
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            listHeaderCalled.innerHTML = html;
+
+            const btnPanggil = listHeaderCalled.querySelector('.btn-panggil-header');
+            const btnLewati = listHeaderCalled.querySelector('.btn-lewati-header');
+            const btnSelanjutnya = listHeaderCalled.querySelector('.btn-selanjutnya-header');
+
+            btnPanggil.addEventListener('click', async function() {
+                const id = this.dataset.id;
+                const nama = this.dataset.nama;
+                const nomor = this.dataset.nomor;
+                if (!confirm(`Panggil ULANG ${nama} (${nomor}) ?`)) return;
+                const success = await panggilPasien(id);
+                if (success) alert(`✅ ${nomor} - ${nama} berhasil dipanggil ulang!`);
+            });
+
+            btnLewati.addEventListener('click', async function() {
+                const id = this.dataset.id;
+                const nama = this.dataset.nama;
+                const nomor = this.dataset.nomor;
+                if (!confirm(`Lewati ${nama} (${nomor}) ?\nPasien akan dipindahkan ke antrian terlewat dan otomatis memanggil berikutnya.`)) return;
+                const success = await lewatiDanPanggilBerikutnya(id);
+                if (success) alert(`✅ ${nomor} - ${nama} dilewati.`);
+            });
+
+            btnSelanjutnya.addEventListener('click', async function() {
+                const id = this.dataset.id;
+                const nama = this.dataset.nama;
+                const nomor = this.dataset.nomor;
+                if (!confirm(`Selesaikan ${nama} (${nomor}) dan panggil pasien berikutnya?`)) return;
+                const success = await selanjutnya();
+                if (success) alert(`✅ Pasien berikutnya dipanggil.`);
+            });
+        }
+
+        // ================================================================
+        //  9.  RENDER UTAMA
         // ================================================================
         function render() {
             const term = searchTerm.trim().toLowerCase();
 
-            // Ambil semua data, lalu filter berdasarkan status
             let waitingList = allPatients.filter(p => p.status === 'waiting');
-            let calledList = allPatients.filter(p => p.status === 'called');
+            let calledList = allPatients.filter(p => p.status === 'called' || p.status === 'completed');
 
-            // Urutkan waiting berdasarkan nomor antrian (numerik, ascending)
-            waitingList.sort((a, b) => {
-                const numA = extractNumber(a.nomor_antrian);
-                const numB = extractNumber(b.nomor_antrian);
-                return numA - numB;
-            });
+            waitingList = sortPatients(waitingList, sortOption);
+            calledList.sort((a, b) => (b.waktu_panggil || 0) - (a.waktu_panggil || 0));
 
-            // Urutkan called berdasarkan waktu panggil (descending, terbaru di atas)
-            calledList.sort((a, b) => {
-                return (b.waktu_panggil || 0) - (a.waktu_panggil || 0);
-            });
-
-            // Total pasien yang sudah check in (waiting + called) — tidak terpengaruh filter
             const totalCheckin = waitingList.length + calledList.length;
             totalPasien.textContent = totalCheckin;
 
@@ -920,29 +1445,24 @@
             const filteredWaiting = waitingList.filter(filterFn);
             const filteredCalled = calledList.filter(filterFn);
 
-            // Pisahkan berdasarkan jenis antrian
             const waitingAON = filteredWaiting.filter(p => p.jenis_antrian === 'AON' || !p.jenis_antrian);
             const waitingAOFF = filteredWaiting.filter(p => p.jenis_antrian === 'AOFF');
             const calledAON = filteredCalled.filter(p => p.jenis_antrian === 'AON' || !p.jenis_antrian);
             const calledAOFF = filteredCalled.filter(p => p.jenis_antrian === 'AOFF');
 
-            // Render ke box masing-masing
             renderBox('listWaitingAON', waitingAON, 'waiting', 'AON');
             renderBox('listWaitingAOFF', waitingAOFF, 'waiting', 'AOFF');
             renderBox('listCalledAON', calledAON, 'called', 'AON');
             renderBox('listCalledAOFF', calledAOFF, 'called', 'AOFF');
 
-            // Update count badge di header box
             $('countWaitingAON').textContent = waitingAON.length;
             $('countWaitingAOFF').textContent = waitingAOFF.length;
             $('countCalledAON').textContent = calledAON.length;
             $('countCalledAOFF').textContent = calledAOFF.length;
 
-            // Update total badge tab
             countWaiting.textContent = filteredWaiting.length;
             countCalled.textContent = filteredCalled.length;
 
-            // Search status
             if (term) {
                 const totalMatch = filteredWaiting.length + filteredCalled.length;
                 searchStatus.innerHTML =
@@ -952,10 +1472,12 @@
             }
 
             clearBtn.classList.toggle('visible', term.length > 0);
+
+            renderHeaderCalled();
         }
 
         // ================================================================
-        //  6.  RENDER SATU BOX (AON atau AOFF) — dengan durasi tunggu & waktu check-in
+        //  10. RENDER SATU BOX
         // ================================================================
         function renderBox(containerId, items, status, jenis) {
             const container = document.getElementById(containerId);
@@ -964,7 +1486,7 @@
             if (items.length === 0) {
                 const msg = (status === 'waiting') ?
                     'Tidak ada antrian ' + (jenis === 'AON' ? 'online' : 'offline') :
-                    'Tidak ada panggilan ' + (jenis === 'AON' ? 'online' : 'offline');
+                    'Tidak ada riwayat atau panggilan ' + (jenis === 'AON' ? 'online' : 'offline');
                 container.innerHTML = `<div class="empty-state-box">${msg}</div>`;
                 return;
             }
@@ -974,64 +1496,83 @@
 
             for (const p of items) {
                 const isCalled = (p.status === 'called');
+                const isCompleted = (p.status === 'completed');
+                const isWaiting = (p.status === 'waiting');
+
                 const waktuDaftar = p.waktu_daftar || 0;
                 const waktuPanggil = p.waktu_panggil || 0;
                 const waktuCheckin = p.waktu_checkin || 0;
 
-                // Tentukan waktu acuan untuk durasi
                 let durasiMs = 0;
-                if (isCalled) {
+                if (isCalled || isCompleted) {
                     durasiMs = waktuPanggil ? now - waktuPanggil : 0;
-                } else {
-                    // waiting: prioritaskan waktu_checkin, fallback ke waktu_daftar
+                } else if (isWaiting) {
                     const startTime = waktuCheckin || waktuDaftar || 0;
                     durasiMs = startTime ? now - startTime : 0;
                 }
                 const durasiStr = formatDurasi(durasiMs);
 
-                // Waktu tampilan: untuk waiting gunakan waktu check-in jika ada, fallback ke waktu daftar
-                const waktuTampil = isCalled ? waktuPanggil : (waktuCheckin || waktuDaftar);
+                const waktuTampil = (isCalled || isCompleted) ? waktuPanggil : (waktuCheckin || waktuDaftar);
                 const waktuLabel = '🕐 ' + formatTime(waktuTampil);
-                const waktuIcon = isCalled ? 'fa-clock' : 'fa-hourglass-start';
+                const waktuIcon = (isCalled || isCompleted) ? 'fa-clock' : 'fa-hourglass-start';
 
                 const badgeClass = (p.jenis_antrian === 'AOFF') ? 'aoff' : 'aon';
+                const altBadge = p.pernah_terlewat ? `<span class="badge-alt">ALT</span>` : '';
 
-                const btnHTML = isCalled ?
-                    `<button class="btn-panggil-ulang" data-id="${p.id}" data-nama="${p.nama_pasien}" data-nomor="${p.nomor_antrian}">
-                                <i class="fas fa-rotate-right"></i> Ulangi
-                            </button>` :
-                    `<button class="btn-panggil" data-id="${p.id}" data-nama="${p.nama_pasien}" data-nomor="${p.nomor_antrian}">
-                                <i class="fas fa-bullhorn"></i> Panggil
-                            </button>`;
+                let cardExtraClass = '';
+                if (isCalled) cardExtraClass = 'called';
+                else if (isCompleted) cardExtraClass = 'completed';
 
-                const cardClass = isCalled ? 'card-antrian called' : 'card-antrian';
+                let actionsHTML = '';
+                if (isCalled) {
+                    actionsHTML = `
+                        <button class="btn-panggil-ulang" data-id="${p.id}" data-nama="${p.nama_pasien}" data-nomor="${p.nomor_antrian}">
+                            <i class="fas fa-rotate-right"></i> Ulangi
+                        </button>
+                        <button class="btn-lewati" data-id="${p.id}" data-nama="${p.nama_pasien}" data-nomor="${p.nomor_antrian}">
+                            <i class="fas fa-forward"></i> Lewati
+                        </button>
+                    `;
+                } else if (isCompleted) {
+                    actionsHTML = `<span class="label-selesai"><i class="fas fa-check-circle"></i> Selesai</span>`;
+                } else if (isWaiting) {
+                    actionsHTML = `
+                        <button class="btn-panggil" data-id="${p.id}" data-nama="${p.nama_pasien}" data-nomor="${p.nomor_antrian}">
+                            <i class="fas fa-bullhorn"></i> Panggil
+                        </button>
+                    `;
+                }
 
                 html += `
-                            <div class="${cardClass}">
-                                <div class="info-left">
-                                    <span class="nomor">${p.nomor_antrian}</span>
-                                    <span class="nama">${p.nama_pasien}</span>
-                                    <span class="badge-jenis-card ${badgeClass}">${p.jenis_antrian}</span>
-                                    <span class="waktu"><i class="fas ${waktuIcon}"></i> ${waktuLabel}</span>
-                                    <span class="durasi-tunggu">⏱ ${durasiStr}</span>
-                                </div>
-                                <div class="actions">
-                                    ${btnHTML}
-                                </div>
-                            </div>
-                        `;
+                    <div class="card-antrian ${cardExtraClass}">
+                        <div class="info-left">
+                            <span class="nomor">${p.nomor_antrian}</span>
+                            <span class="nama">${p.nama_pasien}</span>
+                            ${altBadge}
+                            <span class="badge-jenis-card ${badgeClass}">${p.jenis_antrian}</span>
+                            <span class="waktu"><i class="fas ${waktuIcon}"></i> ${waktuLabel}</span>
+                            <span class="durasi-tunggu">⏱ ${durasiStr}</span>
+                            ${isCompleted ? `<span class="badge-alt" style="background:rgba(34,197,94,0.15); color:#15803d; border-color:rgba(34,197,94,0.3);">✓ Selesai</span>` : ''}
+                        </div>
+                        <div class="actions">
+                            ${actionsHTML}
+                        </div>
+                    </div>
+                `;
             }
 
             container.innerHTML = html;
 
-            // Event listener untuk tombol panggil
             container.querySelectorAll('.btn-panggil, .btn-panggil-ulang').forEach(btn => {
                 btn.addEventListener('click', handlePanggilClick);
+            });
+            container.querySelectorAll('.btn-lewati').forEach(btn => {
+                btn.addEventListener('click', handleLewatiClick);
             });
         }
 
         // ================================================================
-        //  7.  HANDLER PANGGIL / PANGGIL ULANG
+        //  11. HANDLER PANGGIL / PANGGIL ULANG
         // ================================================================
         async function handlePanggilClick(e) {
             const btn = e.currentTarget;
@@ -1047,19 +1588,37 @@
 
             if (!confirm(confirmMsg)) return;
 
+            const success = await panggilPasien(id);
+            if (success) {
+                alert(`✅ ${nomor} - ${nama} berhasil di${action}!`);
+            }
+        }
+
+        // ================================================================
+        //  12. HANDLER LEWATI
+        // ================================================================
+        async function handleLewatiClick(e) {
+            const btn = e.currentTarget;
+            const id = btn.dataset.id;
+            const nama = btn.dataset.nama;
+            const nomor = btn.dataset.nomor;
+
+            if (!confirm(`Lewati ${nama} (${nomor}) ?\nPasien akan dipindahkan ke antrian terlewat.`)) return;
+
             try {
                 await database.ref('antrians/' + id).update({
-                    status: 'called',
-                    waktu_panggil: Date.now()
+                    status: 'skipped',
+                    waktu_skip: Date.now(),
+                    pernah_terlewat: true
                 });
-                alert(`✅ ${nomor} - ${nama} berhasil di${action}!`);
+                alert(`✅ ${nomor} - ${nama} dilewati.`);
             } catch (err) {
                 alert('❌ Gagal: ' + err.message);
             }
         }
 
         // ================================================================
-        //  8.  FIREBASE LISTENER — data antrian (termasuk waktu_checkin)
+        //  13. FIREBASE LISTENER — data antrian
         // ================================================================
         database.ref('antrians').on('value', (snapshot) => {
             const raw = [];
@@ -1075,22 +1634,23 @@
                     waktu_panggil: data.waktu_panggil || 0,
                     waktu_daftar: data.waktu_daftar || 0,
                     waktu_checkin: data.waktu_checkin || 0,
+                    waktu_skip: data.waktu_skip || 0,
+                    pernah_terlewat: data.pernah_terlewat || false
                 });
             });
-            // Tidak dilakukan sorting di sini, karena render akan mengurutkan sesuai kebutuhan
             allPatients = raw;
             render();
         });
 
         // ================================================================
-        //  9.  FIREBASE LISTENER — dokter assignment (realtime)
+        //  14. FIREBASE LISTENER — dokter assignment
         // ================================================================
         database.ref('dokter_assignments/' + KLASTER).on('value', (snap) => {
             dokterNama.textContent = snap.val() || 'Belum ditentukan';
         });
 
         // ================================================================
-        //  10. TAB SWITCHING
+        //  15. TAB SWITCHING
         // ================================================================
         function switchTab(tab) {
             currentTab = tab;
@@ -1104,7 +1664,7 @@
         }
 
         // ================================================================
-        //  11. SEARCH — event input
+        //  16. SEARCH
         // ================================================================
         searchInput.addEventListener('input', function() {
             searchTerm = this.value;
@@ -1128,20 +1688,37 @@
         });
 
         // ================================================================
-        //  12. UPDATE DURASI REAL-TIME (setiap 5 detik)
+        //  17. SORT CHANGE & SINKRONISASI KE FIREBASE
+        // ================================================================
+        sortSelect.addEventListener('change', function() {
+            sortOption = this.value;
+            database.ref('preferences/' + KLASTER + '/sortOption').set(sortOption);
+            render();
+        });
+
+        // ================================================================
+        //  18. UPDATE DURASI REAL-TIME
         // ================================================================
         setInterval(() => {
             render();
         }, 5000);
 
         // ================================================================
-        //  13. INISIALISASI
+        //  19. INISIALISASI
         // ================================================================
         updateTanggal();
         loadDokter();
 
-        console.log(`🖥️ Dashboard ${KLASTER} siap · urutan waiting (nomor) & called (waktu panggil terbaru) diperbarui.`);
-    </script>
+        database.ref('preferences/' + KLASTER + '/sortOption').once('value', snap => {
+            const saved = snap.val();
+            if (saved) {
+                sortOption = saved;
+                sortSelect.value = saved;
+                render();
+            }
+        });
 
+        console.log(`🖥️ Dashboard ${KLASTER} siap · riwayat panggilan disimpan (status 'completed') dan ditampilkan di tab Dipanggil.`);
+    </script>
 </body>
 </html>
