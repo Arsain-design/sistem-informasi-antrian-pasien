@@ -59,7 +59,7 @@ function angkaKeKata(angka) {
 }
 
 // ============================================================
-// 4. FUNGSI FORMAT DURASI (cadangan, tidak digunakan untuk TV)
+// 4. FUNGSI FORMAT DURASI (cadangan)
 // ============================================================
 function formatDurasi(ms) {
     if (!ms || ms < 0) return '—';
@@ -221,9 +221,62 @@ function tambahAntreanSuara(nomor, nama, klaster) {
 }
 
 // ============================================================
-// 6. FUNGSI RENDER TV (dengan waiting list berbentuk tabel)
-//    PERUBAHAN: waiting list hanya menampilkan status 'waiting'
-//    (sudah Check In, belum dipanggil)
+// 6. FUNGSI SORT & PREFERENSI
+// ============================================================
+let sortOptions = { K2: 'nomor-asc', K3D: 'nomor-asc', K3L: 'nomor-asc' };
+
+function extractNumber(nomorStr) {
+    if (!nomorStr) return 0;
+    const parts = nomorStr.split('-');
+    if (parts.length === 2) {
+        const num = parseInt(parts[1], 10);
+        if (!isNaN(num)) return num;
+    }
+    const match = nomorStr.match(/(\d+)$/);
+    if (match) return parseInt(match[1], 10);
+    return 0;
+}
+
+function sortPatients(list, option) {
+    const copy = [...list];
+    switch (option) {
+        case 'nomor-asc':
+            copy.sort((a, b) => extractNumber(a.nomor_antrian) - extractNumber(b.nomor_antrian));
+            break;
+        case 'nomor-desc':
+            copy.sort((a, b) => extractNumber(b.nomor_antrian) - extractNumber(a.nomor_antrian));
+            break;
+        case 'checkin-oldest': {
+            const getTime = (p) => p.waktu_checkin || p.waktu_daftar || 0;
+            copy.sort((a, b) => getTime(a) - getTime(b));
+            break;
+        }
+        case 'checkin-newest': {
+            const getTime = (p) => p.waktu_checkin || p.waktu_daftar || 0;
+            copy.sort((a, b) => getTime(b) - getTime(a));
+            break;
+        }
+        default:
+            break;
+    }
+    return copy;
+}
+
+// Firebase listener untuk preferensi sort
+database.ref('preferences').on('value', (snapshot) => {
+    const data = snapshot.val() || {};
+    ['K2', 'K3D', 'K3L'].forEach(k => {
+        if (data[k] && data[k].sortOption) {
+            sortOptions[k] = data[k].sortOption;
+        }
+    });
+    if (snapshotTerakhir) {
+        renderTV(snapshotTerakhir);
+    }
+});
+
+// ============================================================
+// 7. FUNGSI RENDER TV
 // ============================================================
 function updateDokterTV(data) {
     ['K2', 'K3D', 'K3L'].forEach(k => {
@@ -243,7 +296,6 @@ function renderTV(snapshot) {
         K3L: { called: null }
     };
 
-    // Kumpulkan semua antrian untuk waiting list (hanya yang sudah Check In = waiting)
     const waitingLists = { K2: [], K3D: [], K3L: [] };
 
     snapshot.forEach((childSnapshot) => {
@@ -257,23 +309,15 @@ function renderTV(snapshot) {
                 dataKlaster[k].called = data;
             }
         } else if (data.status === 'waiting') {
-            // HANYA yang sudah Check In (status waiting) yang masuk waiting list
             waitingLists[k].push(data);
         }
-        // status 'registered' diabaikan untuk waiting list TV
     });
 
-    // Urutkan waiting list berdasarkan nomor antrian (angka setelah '-')
-    function sortByNomor(arr) {
-        arr.sort((a, b) => {
-            const numA = parseInt(a.nomor_antrian?.split('-')[1] || '0', 10);
-            const numB = parseInt(b.nomor_antrian?.split('-')[1] || '0', 10);
-            return numA - numB;
-        });
-    }
-    Object.keys(waitingLists).forEach(k => sortByNomor(waitingLists[k]));
+    // Urutkan sesuai preferensi sort dari Firebase
+    Object.keys(waitingLists).forEach(k => {
+        waitingLists[k] = sortPatients(waitingLists[k], sortOptions[k] || 'nomor-asc');
+    });
 
-    // Render masing-masing klaster
     klasterList.forEach(k => {
         const elNomor = document.getElementById(`nomor${k}`);
         const elNama = document.getElementById(`nama${k}`);
@@ -331,7 +375,7 @@ function renderTV(snapshot) {
         elCount.textContent = waiting.length;
 
         if (waiting.length === 0) {
-            elWaiting.innerHTML = `<div class="waiting-empty">Tidak ada antrian menunggu</div>`;
+            elWaiting.innerHTML = `<div class="waiting-empty">Tidak ada antrian selanjutnya</div>`;
         } else {
             let html = '';
             waiting.forEach(item => {
@@ -360,7 +404,7 @@ function renderTV(snapshot) {
 }
 
 // ============================================================
-// 7. FUNGSI JAM & TANGGAL
+// 8. FUNGSI JAM & TANGGAL
 // ============================================================
 function updateJamTanggal() {
     const now = new Date();
@@ -373,10 +417,9 @@ function updateJamTanggal() {
 }
 
 // ============================================================
-// 8. INISIALISASI – DIJALANKAN KETIKA DOM SIAP
+// 9. INISIALISASI
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
-    // --- Pilih suara terbaik ---
     if (synth) {
         synth.onvoiceschanged = () => {
             suaraTerpilih = pilihSuaraTerbaik();
@@ -386,33 +429,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
     }
 
-    // --- Firebase: listen antrian ---
     database.ref('antrians').on('value', (snapshot) => {
         renderTV(snapshot);
     });
 
-    // --- Firebase: listen dokter assignments ---
     database.ref('dokter_assignments').on('value', (snapshot) => {
         const data = snapshot.val() || {};
         updateDokterTV(data);
     });
 
-    // --- Ambil data dokter sekali saat awal ---
     database.ref('dokter_assignments').once('value', (snapshot) => {
         const data = snapshot.val() || {};
         updateDokterTV(data);
     });
 
-    // --- Interval refresh TV (agar efek kedip & status tetap terjaga) ---
     setInterval(() => {
         if (snapshotTerakhir) {
             renderTV(snapshotTerakhir);
         }
     }, 5000);
 
-    // --- Jam & tanggal realtime ---
     updateJamTanggal();
     setInterval(updateJamTanggal, 1000);
 
-    console.log('📺 TV siap (dengan waiting list tabel presisi).');
+    console.log('📺 TV siap (dengan waiting list yang tersinkronisasi dengan preferensi sort dari dashboard).');
 });
