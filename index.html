@@ -686,12 +686,38 @@
             color: #64748b;
         }
 
+        /* === status completed === */
+        .card-antrian-panel.completed-status {
+            opacity: 0.5;
+            background: rgba(240, 240, 240, 0.6);
+        }
+        .card-antrian-panel.completed-status .info strong {
+            background: rgba(148, 163, 184, 0.2);
+            color: #64748b;
+        }
+
         .empty-state {
             color: #94a3b8;
             text-align: center;
             padding: 10px;
             font-size: 0.8rem;
             font-style: italic;
+        }
+
+        /* ===== BADGE ALT ===== */
+        .badge-alt {
+            background: rgba(220, 38, 38, 0.12);
+            /* latar merah transparan */
+            color: #991b1b;
+            /* teks merah gelap */
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            line-height: 1.4;
         }
 
         /* ===== MODAL UMUM ===== */
@@ -1032,6 +1058,10 @@
         .item-check.called-status {
             opacity: 0.7;
         }
+        .item-check.completed-status {
+            opacity: 1;
+            background: rgba(240, 240, 240, 0.6);
+        }
 
         .btn-hapus-terpilih {
             width: 100%;
@@ -1086,7 +1116,7 @@
 
         .grid-jenis-antrian {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
             margin-bottom: 24px;
             align-items: stretch;
@@ -1098,12 +1128,18 @@
         .panel-jenis-antrian.box-offline {
             border-top: 4px solid #fbbf24;
         }
+        .panel-jenis-antrian.box-terlewat {
+            border-top: 4px solid #ef4444;
+        }
 
         .badge-jenis.badge-aon {
             background: linear-gradient(135deg, #0284c7, #38bdf8);
         }
         .badge-jenis.badge-aoff {
             background: linear-gradient(135deg, #d97706, #fbbf24);
+        }
+        .badge-jenis.badge-terlewat {
+            background: linear-gradient(135deg, #b91c1c, #ef4444);
         }
 
         .count-registered.count-aon {
@@ -1113,6 +1149,10 @@
         .count-registered.count-aoff {
             background: rgba(251, 191, 36, 0.15);
             color: #92400e;
+        }
+        .count-registered.count-terlewat {
+            background: rgba(239, 68, 68, 0.12);
+            color: #991b1b;
         }
 
         .panel-jenis-antrian .panel-header {
@@ -1260,6 +1300,11 @@
             color: #92400e;
             border: 1px solid rgba(251, 191, 36, 0.3);
         }
+        .badge-jenis-item.terlewat {
+            background: rgba(239, 68, 68, 0.15);
+            color: #991b1b;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
 
         .badge-klaster-item {
             padding: 2px 10px;
@@ -1280,17 +1325,20 @@
             color: #1e293b;
         }
 
-        .btn-checkin {
+        /* ===== TOMBOL CHECK IN UNTUK AON/AOFF DAN TERLEWAT ===== */
+        .btn-checkin,
+        .btn-checkin-skipped,
+        .btn-checkin-completed {
             width: auto;
             padding: 8px 20px;
             border-radius: 40px;
-            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            background: linear-gradient(135deg, #0d9488, #14b8a6);
             color: white;
             font-weight: 700;
             border: none;
             font-size: 0.8rem;
             cursor: pointer;
-            box-shadow: 0 6px 16px -6px rgba(139, 92, 246, 0.5);
+            box-shadow: 0 6px 16px -6px rgba(13, 148, 136, 0.5);
             transition: all 0.25s ease;
             display: inline-flex;
             align-items: center;
@@ -1298,16 +1346,22 @@
             white-space: nowrap;
         }
 
-        .btn-checkin:hover {
+        .btn-checkin:hover,
+        .btn-checkin-skipped:hover,
+        .btn-checkin-completed:hover {
             transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 10px 22px -8px rgba(139, 92, 246, 0.6);
+            box-shadow: 0 10px 22px -8px rgba(13, 148, 136, 0.6);
         }
 
-        .btn-checkin:active {
+        .btn-checkin:active,
+        .btn-checkin-skipped:active,
+        .btn-checkin-completed:active {
             transform: scale(0.96);
         }
 
-        .btn-checkin:disabled {
+        .btn-checkin:disabled,
+        .btn-checkin-skipped:disabled,
+        .btn-checkin-completed:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
@@ -1460,6 +1514,9 @@
             .grid-klaster {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .grid-jenis-antrian {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 992px) {
@@ -1483,6 +1540,9 @@
             .modal-content.kelola-modal {
                 max-width: 96%;
                 padding: 24px 16px;
+            }
+            .grid-jenis-antrian {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -1671,12 +1731,11 @@
             <div class="section-icon"><i class="fas fa-arrows-rotate"></i></div>
             <div>
                 <h2>JENIS ANTRIAN</h2>
-                <p>Silahkan check in terhadap pasien terdaftar yang dikelompokkan berdasarkan Antrian Online (AON) dan
-                    Antrian Offline (AOFF)</p>
+                <p>Silahkan check in berdasarkan jenis antriannya</p>
             </div>
         </div>
 
-        <!-- ===== PANEL JENIS ANTRIAN (CHECK IN) - 2 BOX: ONLINE & OFFLINE ===== -->
+        <!-- ===== PANEL JENIS ANTRIAN (CHECK IN) - 3 BOX: ONLINE, OFFLINE, TERLEWAT ===== -->
         <div class="grid-jenis-antrian" id="gridJenisAntrian">
             <!-- Box Antrian Online (AON) -->
             <div class="panel-jenis-antrian box-online" id="panelAON">
@@ -1707,6 +1766,20 @@
                     <div class="empty-state">Memuat data...</div>
                 </div>
             </div>
+
+            <!-- Box Antrian Terlewat (TERLEWAT) -->
+            <div class="panel-jenis-antrian box-terlewat" id="panelTERLEWAT">
+                <div class="panel-header">
+                    <div class="panel-title-group">
+                        <h2><i class="fas fa-hourglass-end" style="color:#ef4444;"></i> Antrian Terlewat</h2>
+                        <span class="badge-jenis badge-terlewat">ALT</span>
+                    </div>
+                    <span class="count-registered count-terlewat" id="countTERLEWAT"><i class="fas fa-user-slash"></i> 0 pasien terlewat</span>
+                </div>
+                <div class="daftar-registered" id="bodyTERLEWAT">
+                    <div class="empty-state">Belum ada antrian terlewat</div>
+                </div>
+            </div>
         </div>
 
         <!-- ===== JUDUL SEKSI KLASTER ===== -->
@@ -1714,7 +1787,7 @@
             <div class="section-icon"><i class="fas fa-layer-group"></i></div>
             <div>
                 <h2>PEMBAGIAN KLASTER</h2>
-                <p>Pantau antrian pasien per klaster pelayanan (Anak &amp; Remaja, Dewasa, Lansia)</p>
+                <p>Pantau antrian pasien berdasarkan klaster tujuannya</p>
             </div>
         </div>
 
@@ -1902,8 +1975,7 @@
         <div class="modal-content kelola-modal">
             <button class="close-modal" onclick="tutupKelolaAntrian()"><i class="fas fa-times"></i></button>
             <h2 id="kelolaTitle"><i class="fas fa-users-cog"></i> Kelola Antrian</h2>
-            <p style="color: #64748b; margin-bottom: 12px;">Centang pasien yang ingin dihapus, lalu klik tombol di
-                bawah.</p>
+            <p style="color: #64748b; margin-bottom: 12px;">Centang pasien yang ingin dihapus, atau gunakan tombol Check In untuk memindahkan pasien selesai kembali ke antrian.</p>
 
             <div style="display:flex; gap:12px; margin-bottom:16px; align-items:center; flex-wrap:wrap;"
                 class="kelola-search">
@@ -2068,7 +2140,7 @@
         }
 
         // ============================================================
-        // 6. KELOLA ANTRIAN (SELECTIVE DELETE)
+        // 6. KELOLA ANTRIAN (SELECTIVE DELETE + CHECK IN COMPLETED)
         // ============================================================
         let klasterSaatIni = '';
         let dataPasienKelola = [];
@@ -2089,6 +2161,7 @@
             document.getElementById('kelolaTitle').innerHTML =
                 `<i class="fas fa-users-cog"></i> Kelola Antrian - ${label[klaster]}`;
 
+            // Ambil semua data antrian untuk klaster tersebut (termasuk completed)
             database.ref('antrians').orderByChild('klaster').equalTo(klaster).once('value', (snapshot) => {
                 if (!snapshot.exists()) {
                     dataPasienKelola = [];
@@ -2099,6 +2172,7 @@
 
                 let waitingList = [];
                 let calledList = [];
+                let completedList = [];
 
                 snapshot.forEach((childSnapshot) => {
                     const data = childSnapshot.val();
@@ -2109,20 +2183,24 @@
                         status: data.status,
                         waktu_daftar: data.waktu_daftar || 0,
                         waktu_panggil: data.waktu_panggil || 0,
-                        waktu_checkin: data.waktu_checkin || 0
+                        waktu_checkin: data.waktu_checkin || 0,
+                        pernah_terlewat: data.pernah_terlewat || false
                     };
                     if (data.status === 'waiting') {
                         waitingList.push(entry);
                     } else if (data.status === 'called') {
                         calledList.push(entry);
+                    } else if (data.status === 'completed') {
+                        completedList.push(entry);
                     }
                 });
 
-                // ===== URUTKAN : waiting (numerik), called (waktu panggil terbaru) =====
+                // Urutkan: waiting by nomor, called by waktu panggil, completed by waktu panggil
                 waitingList.sort((a, b) => getNomorAngka(a.nomor) - getNomorAngka(b.nomor));
                 calledList.sort((a, b) => b.waktu_panggil - a.waktu_panggil);
+                completedList.sort((a, b) => b.waktu_panggil - a.waktu_panggil);
 
-                dataPasienKelola = [...waitingList, ...calledList];
+                dataPasienKelola = [...waitingList, ...calledList, ...completedList];
                 renderKelola('');
             });
         }
@@ -2141,9 +2219,11 @@
 
             const waitingList = filtered.filter(item => item.status === 'waiting');
             const calledList = filtered.filter(item => item.status === 'called');
+            const completedList = filtered.filter(item => item.status === 'completed');
 
             let html = '';
 
+            // Bagian Menunggu
             html += `<div class="sub-section">
                         <div class="label-section">
                             <span>⏳ Menunggu</span>
@@ -2156,12 +2236,14 @@
                     const waktuTampil = item.waktu_checkin || item.waktu_daftar;
                     const waktu = waktuTampil ? new Date(waktuTampil).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
                     const checked = selectedIds.has(item.id) ? 'checked' : '';
+                    const altBadge = item.pernah_terlewat ? `<span class="badge-alt">ALT</span>` : '';
                     html += `
                                 <div class="item-check">
                                     <input type="checkbox" data-id="${item.id}" class="cek-pasien" ${checked} onchange="toggleCheckbox('${item.id}')">
                                     <div class="info">
                                         <strong>${item.nomor}</strong>
                                         <span class="nama">${item.nama}</span>
+                                        ${altBadge}
                                         <span class="waktu-kecil"><i class="far fa-clock"></i> ${waktu}</span>
                                     </div>
                                 </div>
@@ -2170,6 +2252,7 @@
             }
             html += `</div>`;
 
+            // Bagian Dipanggil
             html += `<div class="sub-section">
                         <div class="label-section">
                             <span>📢 Sudah Dipanggil</span>
@@ -2181,13 +2264,49 @@
                 calledList.forEach(item => {
                     const waktu = item.waktu_panggil ? new Date(item.waktu_panggil).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
                     const checked = selectedIds.has(item.id) ? 'checked' : '';
+                    const altBadge = item.pernah_terlewat ? `<span class="badge-alt">ALT</span>` : '';
                     html += `
                                 <div class="item-check called-status">
                                     <input type="checkbox" data-id="${item.id}" class="cek-pasien" ${checked} onchange="toggleCheckbox('${item.id}')">
                                     <div class="info">
                                         <strong>${item.nomor}</strong>
                                         <span class="nama">${item.nama}</span>
+                                        ${altBadge}
                                         <span class="waktu-kecil">🕐 ${waktu}</span>
+                                    </div>
+                                </div>
+                            `;
+                });
+            }
+            html += `</div>`;
+
+            // Bagian Selesai (completed) dengan tombol Check In
+            html += `<div class="sub-section">
+                        <div class="label-section">
+                            <span>✅ Selesai</span>
+                            <span class="count-badge">${completedList.length}</span>
+                        </div>`;
+            if (completedList.length === 0) {
+                html += `<div class="empty-state">${query ? 'Tidak ada yang cocok' : 'Belum ada pasien selesai'}</div>`;
+            } else {
+                completedList.forEach(item => {
+                    const waktu = item.waktu_panggil ? new Date(item.waktu_panggil).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
+                    const checked = selectedIds.has(item.id) ? 'checked' : '';
+                    const altBadge = item.pernah_terlewat ? `<span class="badge-alt">ALT</span>` : '';
+                    html += `
+                                <div class="item-check completed-status">
+                                    <input type="checkbox" data-id="${item.id}" class="cek-pasien" ${checked} onchange="toggleCheckbox('${item.id}')">
+                                    <div class="info">
+                                        <strong>${item.nomor}</strong>
+                                        <span class="nama">${item.nama}</span>
+                                        ${altBadge}
+                                        <span class="waktu-kecil">🕐 ${waktu}</span>
+                                        <span class="badge-alt" style="background:rgba(34,197,94,0.15); color:#15803d; border-color:rgba(34,197,94,0.3);">✓ Selesai</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="btn-checkin-completed" data-id="${item.id}" onclick="checkInCompleted('${item.id}')">
+                                            <i class="fas fa-check-circle"></i> Check In
+                                        </button>
                                     </div>
                                 </div>
                             `;
@@ -2269,6 +2388,7 @@
                 document.getElementById('kelolaNotif').textContent = `✅ Berhasil menghapus ${ids.length} pasien.`;
                 document.getElementById('kelolaNotif').style.color = 'green';
 
+                // Tutup modal setelah 1 detik
                 setTimeout(() => tutupKelolaAntrian(), 1000);
 
             } catch (error) {
@@ -2277,6 +2397,30 @@
                 document.getElementById('kelolaNotif').style.color = 'red';
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-trash-alt"></i> Hapus yang Dipilih';
+            }
+        }
+
+        // ===== Fungsi Check In untuk pasien yang sudah selesai (completed) =====
+        async function checkInCompleted(id) {
+            const btn = document.querySelector(`.btn-checkin-completed[data-id="${id}"]`);
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+            }
+            try {
+                await database.ref('antrians/' + id).update({
+                    status: 'waiting',
+                    waktu_checkin: Date.now()
+                });
+                showToast('✅ Pasien berhasil di-Check In ulang dan masuk ke antrian menunggu.', 'success');
+                // Render ulang modal agar data berubah
+                bukaKelolaAntrian(klasterSaatIni); // refresh
+            } catch (error) {
+                showToast('❌ Gagal Check In: ' + error.message, 'error');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Check In';
+                }
             }
         }
 
@@ -2295,7 +2439,7 @@
 
             const query = searchQuery.toLowerCase().trim();
 
-            // Render box AON/AOFF (registered)
+            // Render box AON/AOFF/TERLEWAT (registered & skipped)
             const hasilRegistered = renderJenisAntrian(snapshot, query) || 0;
 
             panelIds.forEach(k => {
@@ -2325,13 +2469,14 @@
                     jenis: data.jenis_antrian || 'AON',
                     waktu_daftar: data.waktu_daftar || 0,
                     waktu_panggil: data.waktu_panggil || 0,
-                    waktu_checkin: data.waktu_checkin || 0
+                    waktu_checkin: data.waktu_checkin || 0,
+                    pernah_terlewat: data.pernah_terlewat || false
                 };
 
                 if (data.status === 'waiting') {
                     dataKlaster[k].waiting.push(entry);
                     totalWaitingGlobal++;
-                } else if (data.status === 'called') {
+                } else if (data.status === 'called' || data.status === 'completed') {
                     dataKlaster[k].called.push(entry);
                     totalCalledGlobal++;
                 } else if (data.status === 'registered') {
@@ -2349,7 +2494,6 @@
             panelIds.forEach(k => {
                 const container = document.getElementById(`body${k}`);
 
-                // Ambil daftar waiting dan called, lalu filter berdasarkan query
                 let waitingList = dataKlaster[k].waiting.filter(item => {
                     if (!query) return true;
                     return item.nomor.toLowerCase().includes(query) ||
@@ -2361,7 +2505,6 @@
                         item.nama.toLowerCase().includes(query);
                 });
 
-                // ===== URUTKAN : waiting (numerik ascending), called (waktu panggil terbaru) =====
                 waitingList.sort((a, b) => getNomorAngka(a.nomor) - getNomorAngka(b.nomor));
                 calledList.sort((a, b) => b.waktu_panggil - a.waktu_panggil);
 
@@ -2383,11 +2526,13 @@
                         const startTime = item.waktu_checkin || item.waktu_daftar || 0;
                         const durasi = Date.now() - startTime;
                         const durasiStr = formatDurasi(durasi);
+                        const altBadge = item.pernah_terlewat ? `<span class="badge-alt">ALT</span>` : '';
                         html += `
                                     <div class="card-antrian-panel">
                                         <div class="info">
                                             <strong>${item.nomor}</strong>
                                             <span class="nama">${item.nama}</span>
+                                            ${altBadge}
                                             <span class="badge-jenis-item ${item.jenis === 'AOFF' ? 'aoff' : 'aon'}">${item.jenis}</span>
                                             <span class="waktu-kecil"><i class="far fa-clock"></i> ${waktuStr}</span>
                                             <span class="durasi-tunggu">⏱ ${durasiStr}</span>
@@ -2407,14 +2552,20 @@
                     html += `<div class="empty-state">${query ? 'Tidak ada yang cocok' : 'Belum ada panggilan'}</div>`;
                 } else {
                     calledList.forEach(item => {
+                        const isCompleted = (item.status === 'completed');
                         const waktuPanggil = item.waktu_panggil ? new Date(item.waktu_panggil).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
                         const durasi = Date.now() - (item.waktu_panggil || 0);
                         const durasiStr = formatDurasi(durasi);
+                        const altBadge = item.pernah_terlewat ? `<span class="badge-alt">ALT</span>` : '';
+                        const selesaiBadge = isCompleted ? `<span class="badge-alt" style="background:rgba(34,197,94,0.15); color:#15803d; border-color:rgba(34,197,94,0.3);">✓ Selesai</span>` : '';
+                        const cardClass = isCompleted ? 'card-antrian-panel completed-status' : 'card-antrian-panel called-status';
                         html += `
-                                    <div class="card-antrian-panel called-status">
+                                    <div class="${cardClass}">
                                         <div class="info">
                                             <strong>${item.nomor}</strong>
                                             <span class="nama">${item.nama}</span>
+                                            ${altBadge}
+                                            ${selesaiBadge}
                                             <span class="badge-jenis-item ${item.jenis === 'AOFF' ? 'aoff' : 'aon'}">${item.jenis}</span>
                                             <span class="waktu-kecil">🕐 ${waktuPanggil}</span>
                                             <span class="durasi-tunggu">⏱ ${durasiStr}</span>
@@ -2446,39 +2597,55 @@
         }
 
         // ============================================================
-        // 9. PANEL JENIS ANTRIAN (REGISTERED) + DURASI
+        // 9. PANEL JENIS ANTRIAN (REGISTERED + SKIPPED) + DURASI + ALT
         // ============================================================
         function renderJenisAntrian(snapshot, query) {
             const containerAON = document.getElementById('bodyAON');
             const containerAOFF = document.getElementById('bodyAOFF');
+            const containerTERLEWAT = document.getElementById('bodyTERLEWAT');
             const countAON = document.getElementById('countAON');
             const countAOFF = document.getElementById('countAOFF');
-            if (!containerAON || !containerAOFF) return 0;
+            const countTERLEWAT = document.getElementById('countTERLEWAT');
+            if (!containerAON || !containerAOFF || !containerTERLEWAT) return 0;
 
             const registeredAON = [];
             const registeredAOFF = [];
+            const skippedList = [];
 
             snapshot.forEach((childSnapshot) => {
                 const data = childSnapshot.val();
-                if (data.status !== 'registered') return;
-                const entry = {
-                    id: childSnapshot.key,
-                    nomor: data.nomor_antrian,
-                    nama: data.nama_pasien,
-                    klaster: data.klaster,
-                    jenis: data.jenis_antrian || 'AON',
-                    waktu_daftar: data.waktu_daftar || 0
-                };
-                if (entry.jenis === 'AOFF') {
-                    registeredAOFF.push(entry);
-                } else {
-                    registeredAON.push(entry);
+                if (data.status === 'registered') {
+                    const entry = {
+                        id: childSnapshot.key,
+                        nomor: data.nomor_antrian,
+                        nama: data.nama_pasien,
+                        klaster: data.klaster,
+                        jenis: data.jenis_antrian || 'AON',
+                        waktu_daftar: data.waktu_daftar || 0,
+                        pernah_terlewat: data.pernah_terlewat || false
+                    };
+                    if (entry.jenis === 'AOFF') {
+                        registeredAOFF.push(entry);
+                    } else {
+                        registeredAON.push(entry);
+                    }
+                } else if (data.status === 'skipped') {
+                    skippedList.push({
+                        id: childSnapshot.key,
+                        nomor: data.nomor_antrian,
+                        nama: data.nama_pasien,
+                        klaster: data.klaster,
+                        jenis: data.jenis_antrian || 'AON',
+                        waktu_skip: data.waktu_skip || 0,
+                        waktu_daftar: data.waktu_daftar || 0,
+                        pernah_terlewat: true // skipped otomatis ALT
+                    });
                 }
             });
 
-            // Urutkan registered berdasarkan waktu daftar (terlama di atas)
             registeredAON.sort((a, b) => a.waktu_daftar - b.waktu_daftar);
             registeredAOFF.sort((a, b) => a.waktu_daftar - b.waktu_daftar);
+            skippedList.sort((a, b) => (a.waktu_skip || 0) - (b.waktu_skip || 0));
 
             const cocok = (item) => {
                 if (!query) return true;
@@ -2488,16 +2655,22 @@
 
             const filteredAON = registeredAON.filter(cocok);
             const filteredAOFF = registeredAOFF.filter(cocok);
+            const filteredSkipped = skippedList.filter(cocok);
 
             countAON.innerHTML = `<i class="fas fa-user-plus"></i> ${filteredAON.length} pasien terdaftar`;
             countAOFF.innerHTML = `<i class="fas fa-user-plus"></i> ${filteredAOFF.length} pasien terdaftar`;
+            countTERLEWAT.innerHTML = `<i class="fas fa-user-slash"></i> ${filteredSkipped.length} pasien terlewat`;
 
             containerAON.innerHTML = renderRegisteredList(filteredAON, 'AON', query);
             containerAOFF.innerHTML = renderRegisteredList(filteredAOFF, 'AOFF', query);
+            containerTERLEWAT.innerHTML = renderSkippedList(filteredSkipped, query);
 
-            return filteredAON.length + filteredAOFF.length;
+            return filteredAON.length + filteredAOFF.length + filteredSkipped.length;
         }
 
+        // ============================================================
+        // 9a. RENDER REGISTERED LIST DENGAN BORDER-LEFT SESUAI JENIS
+        // ============================================================
         function renderRegisteredList(list, jenis, query) {
             if (list.length === 0) {
                 const label = jenis === 'AON' ? 'online' : 'offline';
@@ -2510,17 +2683,22 @@
             const labelKlaster = { K2: 'K2', K3D: 'K3D', K3L: 'K3L' };
             const clsKlaster = { K2: 'k2', K3D: 'k3d', K3L: 'k3l' };
 
+            // Tentukan warna border-left berdasarkan jenis antrian
+            const borderColor = jenis === 'AOFF' ? '#fbbf24' : '#38bdf8';
+
             let html = '';
             list.forEach(item => {
                 const waktu = item.waktu_daftar ? new Date(item.waktu_daftar).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
                 const durasi = Date.now() - (item.waktu_daftar || 0);
                 const durasiStr = formatDurasi(durasi);
                 const jenisCls = item.jenis === 'AOFF' ? 'aoff' : 'aon';
+                const altBadge = item.pernah_terlewat ? `<span class="badge-alt">ALT</span>` : '';
                 html += `
-                    <div class="card-registered">
+                    <div class="card-registered" style="border-left:4px solid ${borderColor};">
                         <div class="info">
                             <strong>${item.nomor}</strong>
                             <span class="nama">${item.nama}</span>
+                            ${altBadge}
                             <span class="badge-klaster-item ${clsKlaster[item.klaster] || ''}">${labelKlaster[item.klaster] || item.klaster}</span>
                             <span class="badge-jenis-item ${jenisCls}">${item.jenis}</span>
                             <span class="waktu-kecil"><i class="far fa-clock"></i> ${waktu}</span>
@@ -2530,6 +2708,48 @@
                             <button class="btn-aksi btn-edit" data-id="${item.id}" onclick="editPasien('${item.id}')" title="Edit pasien"><i class="fas fa-pen"></i></button>
                             <button class="btn-aksi btn-hapus" data-id="${item.id}" onclick="hapusPasien('${item.id}')" title="Hapus pasien"><i class="fas fa-trash"></i></button>
                             <button class="btn-checkin" data-id="${item.id}" onclick="checkInPasien('${item.id}')">
+                                <i class="fas fa-check-circle"></i> Check In
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            return html;
+        }
+
+        // ============================================================
+        // 9b. RENDER SKIPPED LIST (tetap border-left merah)
+        // ============================================================
+        function renderSkippedList(list, query) {
+            if (list.length === 0) {
+                if (query) {
+                    return `<div class="empty-state">Tidak ada antrian terlewat yang cocok dengan pencarian.</div>`;
+                }
+                return `<div class="empty-state">Belum ada antrian terlewat</div>`;
+            }
+
+            const labelKlaster = { K2: 'K2', K3D: 'K3D', K3L: 'K3L' };
+            const clsKlaster = { K2: 'k2', K3D: 'k3d', K3L: 'k3l' };
+
+            let html = '';
+            list.forEach(item => {
+                const waktu = item.waktu_skip ? new Date(item.waktu_skip).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
+                const durasi = Date.now() - (item.waktu_skip || 0);
+                const durasiStr = formatDurasi(durasi);
+                const jenisCls = item.jenis === 'AOFF' ? 'aoff' : 'aon';
+                html += `
+                    <div class="card-registered" style="border-left:4px solid #ef4444;">
+                        <div class="info">
+                            <strong>${item.nomor}</strong>
+                            <span class="nama">${item.nama}</span>
+                            <span class="badge-alt">ALT</span>
+                            <span class="badge-klaster-item ${clsKlaster[item.klaster] || ''}">${labelKlaster[item.klaster] || item.klaster}</span>
+                            <span class="badge-jenis-item ${jenisCls}">${item.jenis}</span>
+                            <span class="waktu-kecil"><i class="far fa-clock"></i> ${waktu}</span>
+                            <span class="durasi-tunggu" style="background:rgba(239,68,68,0.1); color:#991b1b;">⏱ ${durasiStr}</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-checkin-skipped" data-id="${item.id}" onclick="checkInSkipped('${item.id}')">
                                 <i class="fas fa-check-circle"></i> Check In
                             </button>
                         </div>
@@ -2554,6 +2774,29 @@
                     waktu_checkin: Date.now()
                 });
                 showToast('✅ Pasien berhasil Check In dan otomatis masuk ke panel klaster tujuan!', 'success');
+            } catch (error) {
+                showToast('❌ Gagal Check In: ' + error.message, 'error');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Check In';
+                }
+            }
+        }
+
+        // ===== CHECK IN ULANG UNTUK TERLEWAT (tetap bawa ALT) =====
+        async function checkInSkipped(id) {
+            const btn = document.querySelector(`.btn-checkin-skipped[data-id="${id}"]`);
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+            }
+            try {
+                await database.ref('antrians/' + id).update({
+                    status: 'waiting',
+                    waktu_checkin: Date.now(),
+                    pernah_terlewat: true // Tanda ALT tetap melekat
+                });
+                showToast('✅ Pasien berhasil Check In ulang dan masuk ke antrian menunggu.', 'success');
             } catch (error) {
                 showToast('❌ Gagal Check In: ' + error.message, 'error');
                 if (btn) {
@@ -2948,7 +3191,6 @@
             }
         });
 
-        // Perbarui durasi tunggu setiap 5 detik tanpa reload data dari Firebase
         setInterval(() => {
             if (allDataSnapshot) {
                 renderSemua(allDataSnapshot);
@@ -2978,7 +3220,7 @@
             updateDokterTags(snap.val() || {});
         });
 
-        console.log('🏢 Dashboard dengan durasi real-time dan kelola antrian selektif siap!');
+        console.log('🏢 Dashboard dengan ALT, durasi real-time, dan kelola antrian (termasuk check in completed) siap!');
     </script>
 </body>
 
