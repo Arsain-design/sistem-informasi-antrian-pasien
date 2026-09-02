@@ -15,8 +15,8 @@
     </script>
     <style>
         /* ============================================
-           GAYA KHUSUS UNTUK DASHBOARD UTAMA (READ-ONLY)
-           ============================================ */
+               GAYA KHUSUS UNTUK DASHBOARD UTAMA (READ-ONLY)
+               ============================================ */
         * {
             margin: 0;
             padding: 0;
@@ -250,8 +250,8 @@
         }
 
         /* ============================================================
-           🌟 TOOLBAR PEMANGGILAN — VERSI MODERN & STYLISH
-           ============================================================ */
+               🌟 TOOLBAR PEMANGGILAN — VERSI MODERN & STYLISH
+               ============================================================ */
         .toolbar-container {
             display: flex;
             flex-wrap: wrap;
@@ -278,13 +278,11 @@
             border-radius: 62px;
             padding: 2px;
 
-            background: linear-gradient(
-                135deg,
-                rgba(99, 102, 241, 0.20),
-                rgba(56, 189, 248, 0.15),
-                rgba(52, 211, 153, 0.15),
-                rgba(251, 191, 36, 0.15)
-            );
+            background: linear-gradient(135deg,
+                    rgba(99, 102, 241, 0.20),
+                    rgba(56, 189, 248, 0.15),
+                    rgba(52, 211, 153, 0.15),
+                    rgba(251, 191, 36, 0.15));
 
             -webkit-mask:
                 linear-gradient(#fff 0 0) content-box,
@@ -849,6 +847,56 @@
             color: #0d9488;
         }
 
+        /* ===== SORT ROW DI PANEL KLASTER ===== */
+        .panel-sort-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .panel-sort-row .sort-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #64748b;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .panel-sort-row .sort-label i {
+            font-size: 0.65rem;
+        }
+
+        .sort-select-panel {
+            padding: 4px 28px 4px 12px;
+            border-radius: 40px;
+            border: 1.5px solid #e2e8f0;
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E") no-repeat right 10px center;
+            background-size: 10px;
+            outline: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.25s ease;
+            min-width: 120px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .sort-select-panel:hover {
+            border-color: #cbd5e1;
+        }
+
+        .sort-select-panel:focus {
+            border-color: #4338ca;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+        }
+
         /* ===== DAFTAR ISI PANEL ===== */
         .panel-body {
             flex: 1;
@@ -982,9 +1030,7 @@
         /* ===== BADGE ALT ===== */
         .badge-alt {
             background: rgba(220, 38, 38, 0.12);
-            /* latar merah transparan */
             color: #991b1b;
-            /* teks merah gelap */
             padding: 2px 8px;
             border-radius: 30px;
             font-size: 0.65rem;
@@ -1819,6 +1865,11 @@
             .grid-jenis-antrian {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .panel-sort-row .sort-select-panel {
+                min-width: 100px;
+                font-size: 0.65rem;
+                padding: 3px 24px 3px 10px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1892,6 +1943,18 @@
                 padding: 12px 16px;
                 font-size: 0.9rem;
             }
+            .panel-sort-row {
+                margin-top: 6px;
+                gap: 6px;
+            }
+            .panel-sort-row .sort-label {
+                font-size: 0.65rem;
+            }
+            .sort-select-panel {
+                min-width: 90px;
+                font-size: 0.6rem;
+                padding: 3px 22px 3px 8px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1925,6 +1988,14 @@
             }
             .kelola-search input {
                 min-width: 120px;
+            }
+            .panel-sort-row .sort-select-panel {
+                min-width: 80px;
+                font-size: 0.55rem;
+                padding: 2px 18px 2px 6px;
+            }
+            .panel-sort-row .sort-label {
+                font-size: 0.6rem;
             }
         }
     </style>
@@ -2093,6 +2164,16 @@
                         <button class="btn-kelola-antrian" onclick="bukaKelolaAntrian('K2')"><i
                                 class="fas fa-list-ul"></i> Kelola Antrian</button>
                     </div>
+                    <!-- SORT ROW -->
+                    <div class="panel-sort-row">
+                        <span class="sort-label"><i class="fas fa-arrow-up-wide-short"></i> Urut:</span>
+                        <select class="sort-select-panel" data-cluster="K2" id="sortK2">
+                            <option value="nomor-asc">Nomor (kecil→besar)</option>
+                            <option value="nomor-desc">Nomor (besar→kecil)</option>
+                            <option value="checkin-oldest">Check In (terlama)</option>
+                            <option value="checkin-newest">Check In (terbaru)</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="panel-body" id="bodyK2"></div>
             </div>
@@ -2110,6 +2191,16 @@
                         <button class="btn-kelola-antrian" onclick="bukaKelolaAntrian('K3D')"><i
                                 class="fas fa-list-ul"></i> Kelola Antrian</button>
                     </div>
+                    <!-- SORT ROW -->
+                    <div class="panel-sort-row">
+                        <span class="sort-label"><i class="fas fa-arrow-up-wide-short"></i> Urut:</span>
+                        <select class="sort-select-panel" data-cluster="K3D" id="sortK3D">
+                            <option value="nomor-asc">Nomor (kecil→besar)</option>
+                            <option value="nomor-desc">Nomor (besar→kecil)</option>
+                            <option value="checkin-oldest">Check In (terlama)</option>
+                            <option value="checkin-newest">Check In (terbaru)</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="panel-body" id="bodyK3D"></div>
             </div>
@@ -2126,6 +2217,16 @@
                                 id="dokterNamaK3L">Belum ditentukan</span></span>
                         <button class="btn-kelola-antrian" onclick="bukaKelolaAntrian('K3L')"><i
                                 class="fas fa-list-ul"></i> Kelola Antrian</button>
+                    </div>
+                    <!-- SORT ROW -->
+                    <div class="panel-sort-row">
+                        <span class="sort-label"><i class="fas fa-arrow-up-wide-short"></i> Urut:</span>
+                        <select class="sort-select-panel" data-cluster="K3L" id="sortK3L">
+                            <option value="nomor-asc">Nomor (kecil→besar)</option>
+                            <option value="nomor-desc">Nomor (besar→kecil)</option>
+                            <option value="checkin-oldest">Check In (terlama)</option>
+                            <option value="checkin-newest">Check In (terbaru)</option>
+                        </select>
                     </div>
                 </div>
                 <div class="panel-body" id="bodyK3L"></div>
@@ -2202,8 +2303,8 @@
                     <label><i class="fas fa-arrows-rotate"></i> Jenis Antrian</label>
                     <select id="editJenisAntrian" required>
                         <option value="">-- Pilih --</option>
-                        <option value="AON">AON</option>
-                        <option value="AOFF">AOFF</option>
+                        <option value="AON">Antrian Online (AON)</option>
+                        <option value="AOFF">Antrian Offline (AOFF)</option>
                     </select>
                 </div>
                 <button type="submit" class="btn-simpan-modal" id="btnSimpanEdit"><i class="fas fa-save"></i> Simpan
@@ -2379,6 +2480,62 @@
         }
 
         // ============================================================
+        // 4a. FUNGSI SORTIR UNTUK LIST (SESUAI DENGAN DASHBOARD-K2)
+        // ============================================================
+        function sortClusterList(list, option) {
+            const copy = [...list];
+            switch (option) {
+                case 'nomor-asc':
+                    copy.sort((a, b) => getNomorAngka(a.nomor) - getNomorAngka(b.nomor));
+                    break;
+                case 'nomor-desc':
+                    copy.sort((a, b) => getNomorAngka(b.nomor) - getNomorAngka(a.nomor));
+                    break;
+                case 'checkin-oldest': {
+                    const getTime = (p) => p.waktu_checkin || p.waktu_daftar || 0;
+                    copy.sort((a, b) => getTime(a) - getTime(b));
+                    break;
+                }
+                case 'checkin-newest': {
+                    const getTime = (p) => p.waktu_checkin || p.waktu_daftar || 0;
+                    copy.sort((a, b) => getTime(b) - getTime(a));
+                    break;
+                }
+                default:
+                    break;
+            }
+            return copy;
+        }
+
+        // ============================================================
+        // 4b. FUNGSI SORTIR UNTUK CALLED LIST (GUNAKAN WAKTU PANGGIL)
+        // ============================================================
+        function sortClusterCalledList(list, option) {
+            const copy = [...list];
+            switch (option) {
+                case 'nomor-asc':
+                    copy.sort((a, b) => getNomorAngka(a.nomor) - getNomorAngka(b.nomor));
+                    break;
+                case 'nomor-desc':
+                    copy.sort((a, b) => getNomorAngka(b.nomor) - getNomorAngka(a.nomor));
+                    break;
+                case 'checkin-oldest': {
+                    const getTime = (p) => p.waktu_panggil || 0;
+                    copy.sort((a, b) => getTime(a) - getTime(b));
+                    break;
+                }
+                case 'checkin-newest': {
+                    const getTime = (p) => p.waktu_panggil || 0;
+                    copy.sort((a, b) => getTime(b) - getTime(a));
+                    break;
+                }
+                default:
+                    break;
+            }
+            return copy;
+        }
+
+        // ============================================================
         // 5. RESET SEMUA
         // ============================================================
         async function resetAllKlaster() {
@@ -2448,12 +2605,11 @@
             document.getElementById('kelolaTitle').innerHTML =
                 `<i class="fas fa-users-cog"></i> Kelola Antrian - ${label[klaster]}`;
 
-            // Ambil semua data antrian untuk klaster tersebut (termasuk completed)
             database.ref('antrians').orderByChild('klaster').equalTo(klaster).once('value', (snapshot) => {
                 if (!snapshot.exists()) {
                     dataPasienKelola = [];
                     document.getElementById('daftarKelola').innerHTML =
-                    `<div class="pilihan-kosong">📭 Tidak ada data di klaster ini.</div>`;
+                        `<div class="pilihan-kosong">📭 Tidak ada data di klaster ini.</div>`;
                     return;
                 }
 
@@ -2482,7 +2638,6 @@
                     }
                 });
 
-                // Urutkan: waiting by nomor, called by waktu panggil, completed by waktu panggil
                 waitingList.sort((a, b) => getNomorAngka(a.nomor) - getNomorAngka(b.nomor));
                 calledList.sort((a, b) => b.waktu_panggil - a.waktu_panggil);
                 completedList.sort((a, b) => b.waktu_panggil - a.waktu_panggil);
@@ -2510,7 +2665,6 @@
 
             let html = '';
 
-            // Bagian Menunggu
             html += `<div class="sub-section">
                         <div class="label-section">
                             <span>⏳ Menunggu</span>
@@ -2539,7 +2693,6 @@
             }
             html += `</div>`;
 
-            // Bagian Dipanggil
             html += `<div class="sub-section">
                         <div class="label-section">
                             <span>📢 Sudah Dipanggil</span>
@@ -2567,7 +2720,6 @@
             }
             html += `</div>`;
 
-            // Bagian Selesai (completed) dengan tombol Check In
             html += `<div class="sub-section">
                         <div class="label-section">
                             <span>✅ Selesai</span>
@@ -2675,7 +2827,6 @@
                 document.getElementById('kelolaNotif').textContent = `✅ Berhasil menghapus ${ids.length} pasien.`;
                 document.getElementById('kelolaNotif').style.color = 'green';
 
-                // Tutup modal setelah 1 detik
                 setTimeout(() => tutupKelolaAntrian(), 1000);
 
             } catch (error) {
@@ -2687,7 +2838,6 @@
             }
         }
 
-        // ===== Fungsi Check In untuk pasien yang sudah selesai (completed) =====
         async function checkInCompleted(id) {
             const btn = document.querySelector(`.btn-checkin-completed[data-id="${id}"]`);
             if (btn) {
@@ -2700,8 +2850,7 @@
                     waktu_checkin: Date.now()
                 });
                 showToast('✅ Pasien berhasil di-Check In ulang dan masuk ke antrian menunggu.', 'success');
-                // Render ulang modal agar data berubah
-                bukaKelolaAntrian(klasterSaatIni); // refresh
+                bukaKelolaAntrian(klasterSaatIni);
             } catch (error) {
                 showToast('❌ Gagal Check In: ' + error.message, 'error');
                 if (btn) {
@@ -2718,15 +2867,21 @@
         let searchQuery = '';
         let allDataSnapshot = null;
 
+        // Sort preferences per cluster (disimpan di Firebase)
+        const clusterSortOptions = {
+            K2: 'nomor-asc',
+            K3D: 'nomor-asc',
+            K3L: 'nomor-asc'
+        };
+
         // ============================================================
-        // 8. RENDER SEMUA PANEL + DURASI WAKTU TUNGGU REAL-TIME
+        // 8. RENDER SEMUA PANEL + DURASI WAKTU TUNGGU REAL-TIME + SORTIR
         // ============================================================
         function renderSemua(snapshot) {
             allDataSnapshot = snapshot;
 
             const query = searchQuery.toLowerCase().trim();
 
-            // Render box AON/AOFF/TERLEWAT (registered & skipped)
             const hasilRegistered = renderJenisAntrian(snapshot, query) || 0;
 
             panelIds.forEach(k => {
@@ -2792,8 +2947,10 @@
                         item.nama.toLowerCase().includes(query);
                 });
 
-                waitingList.sort((a, b) => getNomorAngka(a.nomor) - getNomorAngka(b.nomor));
-                calledList.sort((a, b) => b.waktu_panggil - a.waktu_panggil);
+                // ===== SORTIR MENGGUNAKAN PREFERENSI PER KLASTER =====
+                const sortOpt = clusterSortOptions[k] || 'nomor-asc';
+                waitingList = sortClusterList(waitingList, sortOpt);
+                calledList = sortClusterCalledList(calledList, sortOpt);
 
                 totalHasilPencarian += waitingList.length + calledList.length;
 
@@ -2925,7 +3082,7 @@
                         jenis: data.jenis_antrian || 'AON',
                         waktu_skip: data.waktu_skip || 0,
                         waktu_daftar: data.waktu_daftar || 0,
-                        pernah_terlewat: true // skipped otomatis ALT
+                        pernah_terlewat: true
                     });
                 }
             });
@@ -2970,7 +3127,6 @@
             const labelKlaster = { K2: 'K2', K3D: 'K3D', K3L: 'K3L' };
             const clsKlaster = { K2: 'k2', K3D: 'k3d', K3L: 'k3l' };
 
-            // Tentukan warna border-left berdasarkan jenis antrian
             const borderColor = jenis === 'AOFF' ? '#fbbf24' : '#38bdf8';
 
             let html = '';
@@ -3070,7 +3226,6 @@
             }
         }
 
-        // ===== CHECK IN ULANG UNTUK TERLEWAT (tetap bawa ALT) =====
         async function checkInSkipped(id) {
             const btn = document.querySelector(`.btn-checkin-skipped[data-id="${id}"]`);
             if (btn) {
@@ -3081,7 +3236,7 @@
                 await database.ref('antrians/' + id).update({
                     status: 'waiting',
                     waktu_checkin: Date.now(),
-                    pernah_terlewat: true // Tanda ALT tetap melekat
+                    pernah_terlewat: true
                 });
                 showToast('✅ Pasien berhasil Check In ulang dan masuk ke antrian menunggu.', 'success');
             } catch (error) {
@@ -3464,6 +3619,46 @@
         }
 
         // ============================================================
+        // 13a. FUNGSI SORTIR PER KLASTER — SAVE & LOAD PREFERENSI
+        // ============================================================
+        function loadSortPreferences() {
+            const clusters = ['K2', 'K3D', 'K3L'];
+            clusters.forEach(k => {
+                const prefPath = 'preferences/' + k + '/sortOption';
+                database.ref(prefPath).once('value', snap => {
+                    const saved = snap.val();
+                    if (saved) {
+                        clusterSortOptions[k] = saved;
+                        const selectEl = document.getElementById('sort' + k);
+                        if (selectEl) {
+                            selectEl.value = saved;
+                        }
+                        if (allDataSnapshot) {
+                            renderSemua(allDataSnapshot);
+                        }
+                    }
+                });
+            });
+        }
+
+        function initSortListeners() {
+            const clusters = ['K2', 'K3D', 'K3L'];
+            clusters.forEach(k => {
+                const selectEl = document.getElementById('sort' + k);
+                if (selectEl) {
+                    selectEl.addEventListener('change', function() {
+                        const val = this.value;
+                        clusterSortOptions[k] = val;
+                        database.ref('preferences/' + k + '/sortOption').set(val);
+                        if (allDataSnapshot) {
+                            renderSemua(allDataSnapshot);
+                        }
+                    });
+                }
+            });
+        }
+
+        // ============================================================
         // 14. LISTENER FIREBASE + INTERVAL DURASI REAL-TIME
         // ============================================================
         database.ref('antrians').on('value', (snapshot) => {
@@ -3507,7 +3702,11 @@
             updateDokterTags(snap.val() || {});
         });
 
+        loadSortPreferences();
+        initSortListeners();
+
         console.log('🏢 Dashboard dengan ALT, durasi real-time, dan kelola antrian (termasuk check in completed) siap!');
+        console.log('📊 Fitur urutkan per klaster aktif — preferensi tersimpan di Firebase.');
     </script>
 </body>
 
