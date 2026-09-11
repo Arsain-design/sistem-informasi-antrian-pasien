@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login · Sistem Informasi Antrian Pasien</title>
+    <link href="logo-puskesmas.png" rel="icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background:
+                radial-gradient(ellipse at 15% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 80%, rgba(56, 189, 248, 0.12) 0%, transparent 55%),
+                linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 32px;
+            padding: 44px 36px 36px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.15), 0 8px 24px -8px rgba(79, 70, 229, 0.1);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: white;
+            border: 3px solid rgba(99, 102, 241, 0.15);
+            box-shadow: 0 8px 24px -8px rgba(79, 70, 229, 0.3);
+            margin-bottom: 18px;
+        }
+
+        .login-header h1 {
+            font-size: 1.55rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e1b4b, #4338ca);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .login-header p {
+            color: #64748b;
+            font-size: 0.92rem;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+            font-size: 0.88rem;
+        }
+
+        .form-group label i {
+            color: #6366f1;
+            margin-right: 6px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 46px 14px 18px;
+            border-radius: 16px;
+            border: 1.5px solid #e2e8f0;
+            background: white;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #1e293b;
+            outline: none;
+            transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group input:focus {
+            border-color: #4338ca;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 4px 6px;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .toggle-password:hover { color: #4338ca; }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #4338ca, #6366f1);
+            color: white;
+            font-weight: 700;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 24px -8px rgba(79, 70, 229, 0.5);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-login:hover:not(:disabled) {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 16px 32px -10px rgba(79, 70, 229, 0.6);
+        }
+
+        .btn-login:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .error-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #991b1b;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 18px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .error-box.show { display: flex; }
+
+        .error-box i { font-size: 1rem; flex-shrink: 0; }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(226, 232, 240, 0.7);
+            color: #94a3b8;
+            font-size: 0.78rem;
+        }
+
+        .login-footer i { color: #6366f1; }
+
+        .loading-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255, 255, 255, 0.35);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 480px) {
+            .login-card { padding: 32px 24px 26px; border-radius: 26px; }
+            .login-header h1 { font-size: 1.3rem; }
+            .login-header img { width: 68px; height: 68px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="login-header">
+            <img src="logo-puskesmas.png" alt="Logo Puskesmas" />
+            <h1>Sistem Informasi Antrian</h1>
+            <p>Silakan login untuk melanjutkan</p>
+        </div>
+
+        <div class="error-box" id="errorBox">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorText"></span>
+        </div>
+
+        <form id="formLogin" autocomplete="on">
+            <div class="form-group">
+                <label for="emailInput"><i class="fas fa-envelope"></i> Email</label>
+                <div class="input-wrap">
+                    <input type="email" id="emailInput" placeholder="Masukkan Email"
+                           required autocomplete="username" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="passwordInput"><i class="fas fa-lock"></i> Password</label>
+                <div class="input-wrap">
+                    <input type="password" id="passwordInput" placeholder="Masukkan Password"
+                           required autocomplete="current-password" />
+                    <button type="button" class="toggle-password" id="togglePassword"
+                            aria-label="Tampilkan password">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login" id="btnLogin">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Masuk</span>
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <i class="fas fa-shield-alt"></i>
+            Koneksi terenkripsi · Hanya untuk petugas
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // ============================================================
+        // KONFIGURASI FIREBASE
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyB-nAMpSMXfomAxtq5Ntebv0IYOmuKitj0",
+            authDomain: "sistem-antrian-puskesmas.firebaseapp.com",
+            databaseURL: "https://sistem-antrian-puskesmas-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "sistem-antrian-puskesmas",
+            storageBucket: "sistem-antrian-puskesmas.firebasestorage.app",
+            messagingSenderId: "727104534075",
+            appId: "1:727104534075:web:9814d1598c9f846e050e1e"
+        };
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // ============================================================
+        // ELEMEN DOM
+        // ============================================================
+        const formLogin   = document.getElementById('formLogin');
+        const emailInput  = document.getElementById('emailInput');
+        const passInput   = document.getElementById('passwordInput');
+        const btnLogin    = document.getElementById('btnLogin');
+        const errorBox    = document.getElementById('errorBox');
+        const errorText   = document.getElementById('errorText');
+
+        // ============================================================
+        // PESAN ERROR BAHASA INDONESIA
+        // ============================================================
+        const pesanError = {
+            'auth/invalid-email':          'Format email tidak valid.',
+            'auth/user-disabled':          'Akun ini telah dinonaktifkan.',
+            'auth/user-not-found':         'Email tidak terdaftar.',
+            'auth/wrong-password':         'Password salah.',
+            'auth/invalid-credential':     'Email atau password salah.',
+            'auth/invalid-login-credentials': 'Email atau password salah.',
+            'auth/too-many-requests':      'Terlalu banyak percobaan. Coba lagi beberapa saat.',
+            'auth/network-request-failed': 'Koneksi internet bermasalah. Periksa jaringan Anda.',
+            'auth/missing-password':       'Password tidak boleh kosong.'
+        };
+
+        function tampilkanError(msg) {
+            errorText.textContent = msg;
+            errorBox.classList.add('show');
+        }
+
+        function sembunyikanError() {
+            errorBox.classList.remove('show');
+        }
+
+        // ============================================================
+        // TOGGLE PASSWORD
+        // ============================================================
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const tipe = passInput.type === 'password' ? 'text' : 'password';
+            passInput.type = tipe;
+            this.querySelector('i').className = tipe === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        });
+
+        // ============================================================
+        // JIKA SUDAH LOGIN → LANGSUNG KE DASHBOARD
+        // ============================================================
+        let sedangLogin = false;
+        auth.onAuthStateChanged(user => {
+            if (user && !sedangLogin) {
+                window.location.replace('index.html');
+            }
+        });
+
+        // ============================================================
+        // SUBMIT FORM LOGIN
+        // ============================================================
+        formLogin.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            sembunyikanError();
+
+            const email    = emailInput.value.trim();
+            const password = passInput.value;
+
+            if (!email || !password) {
+                tampilkanError('Email dan password wajib diisi.');
+                return;
+            }
+
+            sedangLogin = true;
+            btnLogin.disabled = true;
+            btnLogin.innerHTML = '<div class="loading-spinner"></div><span>Memproses...</span>';
+
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                // Berhasil → redirect
+                btnLogin.innerHTML = '<i class="fas fa-check-circle"></i><span>Berhasil! Mengalihkan...</span>';
+                window.location.replace('index.html');
+            } catch (err) {
+                console.error('Login error:', err);
+                const msg = pesanError[err.code] || 'Login gagal. Silakan coba lagi.';
+                tampilkanError(msg);
+                sedangLogin = false;
+                btnLogin.disabled = false;
+                btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>Masuk</span>';
+                passInput.value = '';
+                passInput.focus();
+            }
+        });
+
+        // Auto-focus ke email
+        emailInput.focus();
+    </script>
+</body>
+</html>
