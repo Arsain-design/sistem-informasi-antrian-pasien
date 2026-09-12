@@ -192,7 +192,7 @@ function prosesAntreanSuara() {
     const klasterNormal = mapKlasterFormal[klaster] || klaster;
 
     const teks =
-        `Nomor antrian ${nomorFormatted}, atas nama ${namaNormal}, dipersilakan menuju ${klasterNormal}.`;
+        `Nomor antrian ${nomorFormatted}, atas nama ${namaNormal}, silahkan menuju ${klasterNormal}.`;
 
     const utterance = new SpeechSynthesisUtterance(teks);
     utterance.lang = 'id-ID';
