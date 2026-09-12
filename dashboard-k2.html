@@ -1618,7 +1618,7 @@
                         </button>
                     `;
                 } else if (isCompleted) {
-                    actionsHTML = `<span class="label-selesai"><i class="fas fa-check-circle"></i> Selesai</span>`;
+                    actionsHTML = ''; // Kosongkan saja
                 } else if (isWaiting) {
                     actionsHTML = `
                         <button class="btn-panggil" data-id="${p.id}" data-nama="${p.nama_pasien}" data-nomor="${p.nomor_antrian}">
